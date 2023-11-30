@@ -1,0 +1,79 @@
+"use client"
+import { Size, Colour, Ribbon, Product } from "@/app/types"
+import { useState } from 'react';
+import { product_catalouge, colour, ribbon, mens_size, womans_size, kids_size} from '@/db/schema';
+import { db } from "@/db/index";
+
+export default async function ItemForm({product}: {product: typeof product_catalouge }) {
+
+     const colourTable: Colour = await db.select().from(colour);
+    
+    let size: Size = [{size_id: 1,
+    size:"M"}]
+
+    let ribbonTable: Ribbon = [{ribbon_id: 1,
+    ribbon:"white"}]
+
+    const [message, setMessage] = useState<string>('');
+    
+    async function findSizeCategory(): Promise<void> {
+	const category = product?.category ;
+	switch(category) {
+	    case "mens":
+		size = await db.select().from(mens_size);
+		break;
+	    case "womans":
+		size = await db.select().from(womans_size);
+		ribbonTable = await db.select().from(ribbon)
+		break;
+	    case "kids":
+		size = await db.select().from(kids_size);
+		ribbonTable = await db.select().from(ribbon)
+		break;
+	    default:
+		break;
+	}
+    }
+    await findSizeCategory()
+
+    return (
+	<div className="flex flex-col">
+	    <label className="block">
+		what size are you?
+		<select>
+		    {size.map(s =>
+			<option key={s.size_id} value={`${s.size_id}`}>{s.size}</option>
+		    )}
+		</select>
+	    </label>
+	    <label className="block">
+		what colour do you want?
+		<select>
+		    {colourTable.map(c =>
+			<option key={c.id} value={`${c.id}`}>{c.colour}</option>
+		    )}
+		</select>
+	    </label>
+            {ribbonTable && ribbonTable.length > 0 && (
+                <label className="block ">
+                    Select a ribbon:
+                    <select>
+                        {ribbonTable.map(r =>
+                            <option key={r.ribbon_id} value={r.ribbon_id}>{r.ribbon}</option>
+                        )}
+                    </select>
+                </label>
+            )}
+	    <label className="block mt-4">
+		Enter a message:
+		<input
+		type="text"
+		value={message}
+		onChange={(e) => setMessage(e.target.value)}
+		placeholder="Type your message here"
+		/>
+	    </label>
+	</div>
+
+    )
+}

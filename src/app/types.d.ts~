@@ -1,0 +1,22 @@
+export type Product = {
+    id: number,
+    name: string,
+    image_location: string,
+    price: number,
+    category: string
+}
+
+export type Size = {
+    size_id: number,
+    size: string
+}[]
+
+export type Colour = {
+    id: number,
+    colour: string
+}[]
+
+export type Ribbon = {
+    ribbon_id: number,
+    ribbon
+}[]

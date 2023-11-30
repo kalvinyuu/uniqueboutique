@@ -10,14 +10,16 @@
     "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
-    "@planetscale/database": "^1.8.0",
+    "@auth0/nextjs-auth0": "^3.3.0",
+    "@planetscale/database": "^1.10.0",
     "@types/node": "20.3.2",
-    "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
-    "drizzle-orm": "^0.27.0",
-    "mysql2": "^3.4.4",
+    "drizzle-orm": "^0.27.2",
+    "install": "^0.13.0",
+    "mysql2": "^3.6.0",
     "next": "13.4.7",
+    "npm": "^10.2.4",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -25,6 +27,7 @@
     "typescript": "5.1.5"
   },
   "devDependencies": {
+    "@types/react": "^18.2.18",
     "dotenv": "^16.3.1",
     "drizzle-kit": "^0.19.3"
   }

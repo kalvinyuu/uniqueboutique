@@ -1,0 +1,1 @@
+ALTER TABLE `product_catalouge` RENAME COLUMN `imageLocation` TO `image_location`;
