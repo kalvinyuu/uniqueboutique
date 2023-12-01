@@ -1,14 +1,14 @@
-import { product_catalouge, colour, ribbon, mens_size, womans_size, kids_size} from '@/db/schema'; 
+import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
 import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
 import { Size, Colour, Ribbon, Product } from "@/app/types"
-import { CartProvider } from "@/app/cartContext"
+import { CartProvider } from "@/app/components/cartContext"
 
 export default async function Page({ params }: { params: { item: number } }) {
-    const product = await db.query.product_catalouge.findFirst({
-        where: eq(product_catalouge.id, params.item)
+    const product = await db.query.productCatalouge.findFirst({
+        where: eq(productCatalouge.id, params.item)
     });
 
     const colourTable: Colour = await db.select().from(colour);
@@ -22,14 +22,14 @@ export default async function Page({ params }: { params: { item: number } }) {
 	const category = product?.category ;
 	switch(category) {
 	    case "mens":
-		size = await db.select().from(mens_size);
+		size = await db.select().from(mensSize);
 		break;
 	    case "womans":
-		size = await db.select().from(womans_size);
+		size = await db.select().from(womansSize);
 		ribbonTable = await db.select().from(ribbon)
 		break;
 	    case "kids":
-		size = await db.select().from(kids_size);
+		size = await db.select().from(kidsSize);
 		ribbonTable = await db.select().from(ribbon)
 		break;
 	    default:

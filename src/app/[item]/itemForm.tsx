@@ -1,7 +1,7 @@
 "use client"
 import { Size, Colour, Ribbon, Product, Action } from "@/app/types"
 import { useState } from 'react';
-import { useCart } from "@/app/cartContext"
+import { useCart } from "@/app/components/cartContext"
 
 export default function ItemForm({product, size, colourTable,
 					ribbonTable}: {product: Product, size: Size, colourTable: Colour, ribbonTable: Ribbon }) {

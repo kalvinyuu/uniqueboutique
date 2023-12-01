@@ -1,55 +1,147 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, primaryKey, decimal } from "drizzle-orm/mysql-core"
-import { sql } from "drizzle-orm"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, decimal, timestamp } from "drizzle-orm/mysql-core"
+import { sql, relations } from "drizzle-orm"
 
-export const product_catalouge = mysqlTable("product_catalouge", {
-    id: int("id").autoincrement().notNull(),
-    name: varchar("name", { length: 100 }).notNull(),
-    image_location: varchar("image_location", { length: 100 }).notNull(),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    category: varchar("category", { length: 100 }).notNull(),
+
+export const addresses = mysqlTable("addresses", {
+	addressId: int("address_id").autoincrement().notNull(),
+    userId: int("user_id").notNull(),
+	streetAddress: varchar("street_address", { length: 255 }),
+	city: varchar("city", { length: 50 }),
+	postCode: varchar("post_code", { length: 20 }),
+	country: varchar("country", { length: 50 }),
 },
-					    (table) => {
-						return {
-						    product_catalouge_id: primaryKey(table.id)
-						}
-					    });
-
-export const ribbon = mysqlTable("ribbon", {
-    ribbon_id: int("ribbon_id").autoincrement().primaryKey().notNull(),
-    ribbon: varchar("ribbon", { length: 100 }).notNull(),
+(table) => {
+	return {
+		addressesAddressId: primaryKey(table.addressId),
+	}
 });
-
-export const mens_size = mysqlTable("mens_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    size_id: int("size_id").autoincrement().primaryKey().notNull(),});
-
-export const womans_size = mysqlTable("womans_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    size_id: int("size_id").autoincrement().primaryKey().notNull(),
-});
-
 
 export const colour = mysqlTable("colour", {
-    id: int("colour_id").autoincrement().notNull().primaryKey(),
-    colour: varchar("colour", { length: 100 }).notNull(),
-});
-export const kids_size = mysqlTable("kids_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    size_id: int("size_id").autoincrement().primaryKey().notNull(),
+	colourId: int("colour_id").autoincrement().notNull(),
+	colour: varchar("colour", { length: 100 }).notNull(),
+},
+(table) => {
+	return {
+		colourColourId: primaryKey(table.colourId),
+	}
 });
 
-export const specific_item = mysqlTable("specific_item", {
-    id: int('id').primaryKey(),
-    product_id: int("product id"),
-    size: varchar("size", { length: 100 }),
-    colour: varchar("colour", { length: 100 }),
-    name: varchar("name", { length: 100 }),
-    stock: int("stock"),
-    category: varchar("category", { length: 100 }),
-    specific_id: varchar("specific_id", { length: 100 }),
-    image_location: varchar("image_location", { length: 100 }),
-    image_description: varchar("image_description", { length: 100 }),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    message: varchar("message", { length: 100 }),
-
+export const kidsSize = mysqlTable("kids_size", {
+	size: varchar("size", { length: 100 }).notNull(),
+	sizeId: int("size_id").autoincrement().notNull(),
+},
+(table) => {
+	return {
+		kidsSizeSizeId: primaryKey(table.sizeId),
+	}
 });
+
+export const mensSize = mysqlTable("mens_size", {
+	size: varchar("size", { length: 100 }).notNull(),
+	sizeId: int("size_id").autoincrement().notNull(),
+},
+(table) => {
+	return {
+		mensSizeSizeId: primaryKey(table.sizeId),
+	}
+});
+
+export const orderItems = mysqlTable("order_items", {
+	orderItemId: int("order_item_id").autoincrement().notNull(),
+	orderId: int("order_id"),
+	productId: int("product_id"),
+	quantity: int("quantity"),
+	unitPrice: decimal("unit_price", { precision: 10, scale: 2 }),
+},
+(table) => {
+	return {
+		orderItemsOrderItemId: primaryKey(table.orderItemId),
+	}
+});
+
+export const orders = mysqlTable("orders", {
+	orderId: int("order_id").autoincrement().notNull(),
+	userId: int("user_id"),
+	orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
+	totalAmount: decimal("total_amount", { precision: 10, scale: 2 }),
+},
+(table) => {
+	return {
+		ordersOrderId: primaryKey(table.orderId),
+	}
+});
+
+export const productCatalouge = mysqlTable("product_catalouge", {
+	id: int("id").autoincrement().notNull(),
+	name: varchar("name", { length: 100 }).notNull(),
+	imageLocation: varchar("image_location", { length: 100 }).notNull(),
+	price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+	category: varchar("category", { length: 100 }).notNull(),
+},
+(table) => {
+	return {
+		productCatalougeId: primaryKey(table.id),
+	}
+});
+
+export const ribbon = mysqlTable("ribbon", {
+	ribbonId: int("ribbon_id").autoincrement().notNull(),
+	ribbon: varchar("ribbon", { length: 100 }).notNull(),
+},
+(table) => {
+	return {
+		ribbonRibbonId: primaryKey(table.ribbonId),
+	}
+});
+
+export const specificItem = mysqlTable("specific_item", {
+	id: int("id").notNull(),
+	productId: int("product_id"),
+	size: varchar("size", { length: 100 }),
+	colour: varchar("colour", { length: 100 }),
+	name: varchar("name", { length: 100 }),
+	stock: int("stock"),
+	category: varchar("category", { length: 100 }),
+	specificId: varchar("specific_id", { length: 100 }),
+	imageLocation: varchar("image_location", { length: 100 }),
+	imageDescription: varchar("image_description", { length: 100 }),
+	price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+	message: varchar("message", { length: 100 }),
+},
+(table) => {
+	return {
+		specificItemId: primaryKey(table.id),
+	}
+});
+
+export const users = mysqlTable("users", {
+	id: int("user_id").autoincrement().notNull(),
+	auth0UserId: varchar("auth0_user_id", { length: 255 }).notNull(),
+	firstname: varchar("firstname", { length: 50 }).notNull(),
+	surname: varchar("surname", { length: 50 }).notNull(),
+	email: varchar("email", { length: 255 }).notNull(),
+	registrationDate: timestamp("registration_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
+},
+(table) => {
+	return {
+		usersUserId: primaryKey(table.id),
+	}
+});
+
+export const womansSize = mysqlTable("womans_size", {
+	size: varchar("size", { length: 100 }).notNull(),
+	sizeId: int("size_id").autoincrement().notNull(),
+},
+(table) => {
+	return {
+		womansSizeSizeId: primaryKey(table.sizeId),
+	}
+});
+
+export const addressUserRelationship = relations(addresses, ({ one }) => ({
+  user: one(users, {
+    fields: [addresses.userId],
+    references: [users.id]
+  })
+}))
+

@@ -13,4 +13,4 @@ const connection = await mysql.createConnection({
     },
 });
  
-export const db = drizzle(connection, { schema });
+export const db = drizzle(connection, { schema, mode: 'planetscale' });

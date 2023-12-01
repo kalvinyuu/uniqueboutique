@@ -1,50 +1,55 @@
 "use client"
 import {useUser,  } from "@auth0/nextjs-auth0/client"
-import { useState } from 'react';
+import { useState, useRef, createRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {createPortal} from "react-dom"
+
 // Function to get items from local storage
 const getCartItems = () => {
   const cartItems = localStorage.getItem('my-cart');
   return cartItems ? JSON.parse(cartItems) : [];
 };
 
-
 const Navbar = () => {
-    const [showModal, setShowModal] = useState(false)
-    const [showModal2, setShowModal2] = useState(false)
-    const cart = document.getElementById('cart')
-    const user = document.getElementById('user')
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const cartRef = useRef(null);
+  const userRef = useRef(null);
     
+
+
   return (
-    <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
-	<div className="text-lg font-bold">Unique Boutique</div>
-	<div>
-            <button
-		id="user" 
+    <nav className="fixed top-0 left-0 w-full flex items-center justify-between p-4 bg-gray-800 text-white">
+      <div className="text-lg font-bold">Unique Boutique</div>
+      <div>
+        <button
+          ref={userRef}
           className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 items-center"
           onClick={() => setShowModal2(!showModal2)}
-            > <Image src="/user.svg" width={20} height={20} alt='user'/>
-            {showModal2 && createPortal (
-		<ProfileClient onClose={() => setShowModal2(false)} />, user
-	    )}
+        >
+          <Image src="/user.svg" width={20} height={20} alt='user' />
+          {showModal2 && createPortal(
+            <ProfileClient onClose={() => setShowModal2(false)} />, userRef.current
+          )}
         </button>
 
-            <button
-		id="cart" 
+        <button
+          ref={cartRef}
           className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 items-center"
           onClick={() => setShowModal(!showModal)}
-            > <Image src="/cart.svg" width={20} height={20} alt='cart'/>
-            {showModal && createPortal (
-		<ShoppingCart onClose={() => setShowModal(false)} />, cart
-	    )}
+        >
+          <Image src="/cart.svg" width={20} height={20} alt='cart' />
+          {showModal && createPortal(
+            <ShoppingCart onClose={() => setShowModal(false)} />, cartRef.current
+          )}
         </button>
       </div>
     </nav>
   );
 };
 
-export {Navbar};
+export { Navbar };
 
 function ProfileClient() {
     const { user, error, isLoading } = useUser();
@@ -69,7 +74,6 @@ function ProfileClient() {
 // ShoppingCart component with Tailwind CSS styles
 const ShoppingCart = ({ onClose }) => {
     const cartItems = getCartItems();
-
     return (
 	<div className="absolute flex flex-col flex-wrap right-0 mt-8 mr-4 p-4 rounded-lg border shadow-lg">
 	    {cartItems.map((item, index) => (
@@ -86,6 +90,7 @@ const ShoppingCart = ({ onClose }) => {
 		    </div>
 		</div>
 	    ))}
+	    <Link href="/address">Checkout</Link>
 	    <button onClick={onClose}>Close</button>
 	</div>
     );

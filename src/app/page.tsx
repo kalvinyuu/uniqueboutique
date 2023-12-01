@@ -1,12 +1,10 @@
 import getAllProducts from '@/lib/getProducts'
 import Image from 'next/image'
 import Link from "next/link";
-import  {Navbar}  from "@/app/navbar"
 export default function Home() {
   return (
       <div className="overflow-hidden">
 	  <div>
-	      <Navbar />
 	      {/* Other content of your app */}
 	  </div>
 	  <Products/>
