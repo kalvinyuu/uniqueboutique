@@ -7,6 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
+
 export default function PreviewPage() {
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -22,38 +23,11 @@ export default function PreviewPage() {
 
   return (
     <form action="/api/checkout_sessions" method="POST">
-      <section>
-        <button type="submit" role="link">
+      <section className="bg-white flex flex-col w-400 h-112 rounded-6 justify-between">
+        <button type="submit" role="link" className="h-36 bg-blue-600 rounded-4 text-white font-bold border-0 cursor-pointer transition-all duration-200 ease-in-out shadow-md hover:opacity-80">
           Checkout
         </button>
       </section>
-      <style jsx>
-        {`
-          section {
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            height: 112px;
-            border-radius: 6px;
-            justify-content: space-between;
-          }
-          button {
-            height: 36px;
-            background: #556cd6;
-            border-radius: 4px;
-            color: white;
-            border: 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          }
-          button:hover {
-            opacity: 0.8;
-          }
-        `}
-      </style>
     </form>
   );
 }
