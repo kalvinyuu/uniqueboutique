@@ -4,7 +4,7 @@ import { useState, useRef, createRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {createPortal} from "react-dom"
-
+import PreviewPage from "@/app/components/checkout"
 // Function to get items from local storage
 const getCartItems = () => {
   const cartItems = localStorage.getItem('my-cart');
@@ -90,7 +90,7 @@ const ShoppingCart = ({ onClose }) => {
 		    </div>
 		</div>
 	    ))}
-	    <Link href="/address">Checkout</Link>
+	<PreviewPage/>
 	    <button onClick={onClose}>Close</button>
 	</div>
     );
