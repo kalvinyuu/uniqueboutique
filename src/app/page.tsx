@@ -13,7 +13,7 @@ export default function Home() {
 }
 async function Products() {
   const products = await getAllProducts();
-
+    console.log(products)
   return (
       <div className="grid">
       {products.map(product => (
