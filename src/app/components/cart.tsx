@@ -1,6 +1,6 @@
 import { useShoppingCart } from 'use-shopping-cart'
 import CartItem from './CartItem'
-import CheckoutButton from './CheckoutButton'
+import CheckoutButton from './checkoutButton'
 
 export default function ShoppingCart() {
   const { shouldDisplayCart, cartCount, cartDetails } = useShoppingCart()
