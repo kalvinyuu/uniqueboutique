@@ -1,12 +1,11 @@
 "use client"
 import {useUser, } from "@auth0/nextjs-auth0/client"
-import { useState, useRef, createRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {createPortal} from "react-dom"
 import ShoppingCart from '@/app/components/cart'
 import {useShoppingCart} from "use-shopping-cart"
-
 
 
 const Navbar = () => {
@@ -61,4 +60,3 @@ function ProfileClient() {
 	: <a href="/api/auth/login">Login</a>
     );
 }
-
