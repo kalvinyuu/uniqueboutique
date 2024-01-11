@@ -7,17 +7,17 @@ export type Product = {
 }
 
 export type Size = {
-    size_id: number,
+    sizeId: number,
     size: string
 }[]
 
 export type Colour = {
-    id: number,
+    colourId: number,
     colour: string
 }[]
 
 export type Ribbon = {
-    ribbon_id: number,
+    ribbonId: number,
     ribbon: string
 }[]
 
@@ -37,8 +37,7 @@ export type CartItem = {
 
 export type Cart = CartItem[];
 
-export type Action =
-    | { type: 'ADD_TO_CART';
+export type Action =| { type: 'ADD_TO_CART';
 	id: number;
 	name: string;
 	image_location: string;
@@ -52,3 +51,28 @@ export type Action =
 	ribbon_id: number | null; }
     | { type: 'REMOVE_FROM_CART'; id: number };
 
+export type ProductCatalouge = {
+  id: number;
+  name: string;
+  imageLocation: string;
+  price: string
+  category: string;
+}
+
+export type Item = {
+    id: string,
+    name: string,
+    image: string,
+    quantity: number,
+    price: number
+}
+
+export type StripeProduct = {
+    id: number,
+    sku: string
+    name: string,
+    price: number,
+    currency: string,
+    image: string, // Corrected path
+
+}

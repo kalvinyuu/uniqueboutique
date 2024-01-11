@@ -1,9 +1,9 @@
 'use client'
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 import Image from 'next/image'
-
-export default function CartItem({ item }) {
-  const { name, image, quantity, price } = item
+import {Item} from '@/app/types'
+export default function CartItem({ item }: {item: Item}) {
+  const { name, image, quantity, price, id } = item
   const { removeItem } = useShoppingCart()
 
   const removeItemFromCart = () => {

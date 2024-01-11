@@ -1,8 +1,9 @@
 "use client"
-import { Size, Colour, Ribbon, Product, Action } from "@/app/types"
+import { Size, Colour, Ribbon, Product, StripeProduct } from "@/app/types"
 import { useState } from 'react';
 import {products } from "@/app/data/products"
 import { formatCurrencyString, useShoppingCart } from 'use-shopping-cart'
+
 
 export default function ItemForm({product, size, colourTable,
 				  ribbonTable}: {product: Product, size: Size, colourTable: Colour, ribbonTable: Ribbon }) {
@@ -14,46 +15,30 @@ export default function ItemForm({product, size, colourTable,
     const [message, setMessage] = useState<string>('');
     const { addItem } = useShoppingCart()
 
-    function getObjectById(array, id) {
+    function getObjectById(array:StripeProduct[], id:number) {
 	return array.find(item => item.id === id);
     }
+
     
     // Example usage
     const stripeProduct = getObjectById(products, product.id);
-
-    console.log(stripeProduct);
     
-    /*const handleAddToCart = () => {
-	const selectedSizeObj = size.find((s) => s.size === selectedSize).size_id;
-	const selectedColourObj = colourTable.find((c) => c.colour === selectedColour).id;
-	const selectedOptions = {
-	    id: product.id,
-	    name: product.name,
-	    image_location: product.image_location,
-	    price: product.price,
-	    category: product.category,
-	    size: selectedSize,
-	    size_id: selectedSizeObj,
-	    colour: selectedColour,
-	    colour_id: selectedColourObj,
-	    ribbon: selectedRibbon,
-	    ribbon_id: ribbonTable.find((r) => r.ribbon === selectedRibbon).ribbon_id, // Extract ribbon_id
-	    message: message,
-	};
-	
-	
-    }; */
-const addToCart = () => {
-  addItem(stripeProduct, {
-    count: 1,
-    product_metadata: {
-      size: selectedSize,
-      msg: message,
-      colour: selectedColour,
-      ribbon: selectedRibbon,
-    }
-  });
-};
+    const addToCart = () => {
+	if (stripeProduct) {
+	    addItem(stripeProduct, {
+		count: 1,
+		product_metadata: {
+		    size: selectedSize,
+		    msg: message,
+		    colour: selectedColour,
+		    ribbon: selectedRibbon,
+		}
+	    });
+	} else {
+	    console.error("Product not found!"); // Or handle the case where the product is not found
+	}
+    };
+
 
 	return (
 	<div>
@@ -63,7 +48,7 @@ const addToCart = () => {
 		    <select onChange={(e) => setSelectedSize(e.target.value)}>
 			<option value="">Select Size</option>
 			{size.map((s) => (
-			    <option key={s.size_id} value={s.size}>
+			    <option key={s.sizeId} value={s.size}>
 				{s.size}
 			    </option>
 			))}
@@ -74,7 +59,7 @@ const addToCart = () => {
 		    <select onChange={(e) => setSelectedColour(e.target.value)}>
 			<option value="">Select Colour</option>
 			{colourTable.map((c) => (
-			    <option key={c.id} value={c.colour}>
+			    <option key={c.colourId} value={c.colour}>
 				{c.colour}
 			    </option>
 			))}
@@ -86,7 +71,7 @@ const addToCart = () => {
 			<select onChange={(e) => { console.log('Selected Ribbon:', e.target.value); setSelectedRibbon(e.target.value); }}>
 			    <option value="">Select Ribbon</option>
 			    {ribbonTable.map((r) => (
-				<option key={r.ribbon_id} value={r.ribbon}>
+				<option key={r.ribbonId} value={r.ribbon}>
 				    {r.ribbon}
 				</option>
 			    ))}

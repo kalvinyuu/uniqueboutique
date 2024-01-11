@@ -23,8 +23,8 @@ const Navbar = () => {
           onClick={() => setShowModal2(!showModal2)}
         >
           <Image src="/user.svg" width={20} height={20} alt='user' />
-          {showModal2 && createPortal(
-            <ProfileClient onClose={() => setShowModal2(false)} />, userRef.current
+          {showModal2 && userRef.current && createPortal(
+            <ProfileClient />, userRef.current
           )}
         </button>
 
@@ -50,7 +50,6 @@ function ProfileClient() {
 	user ?
 	    <div className="absolute flex flex-col flex-wrap right-0 mt-8 mr-4 p-4 rounded-lg border shadow-lg">
 		<div>
-		    <img src={user.picture} alt={user.name} />
 		    <h2>{user.name}</h2>
 		    <p>{user.email}</p>
 		    <p>{user.sub}</p>

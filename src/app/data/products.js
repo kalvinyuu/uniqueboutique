@@ -1,6 +1,7 @@
 export const products = [
     {
         id: 1,
+	sku: "",
         name: "mens pjs",
         price: 3300,
         currency: "GBP",
@@ -8,6 +9,7 @@ export const products = [
     },
     {
         id: 2,
+	sku: "",
         name: "kids pjs",
         price: 1399,
         currency: "GBP",

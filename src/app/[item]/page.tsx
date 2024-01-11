@@ -3,17 +3,19 @@ import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
 import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
-import { Size, Colour, Ribbon, Product } from "@/app/types"
+import { Size, Colour, Ribbon, Product, ProductCatalouge } from "@/app/types"
 import { CartProvider } from "@/app/components/cartContext"
-
+ 
+type colourTable = { id: number; colour: string }[];
+ 
 export default async function Page({ params }: { params: { item: number } }) {
     const product = await db.query.productCatalouge.findFirst({
         where: eq(productCatalouge.id, params.item)
     });
 
-    const colourTable: Colour = await db.select().from(colour);
+    const colourTable = await db.select().from(colour);
     
-    let size: Size = [{size_id: 1,
+    let size: Size = [{sizeId: 1,
 		       size:"M"}]
 
     let ribbonTable: Ribbon = []

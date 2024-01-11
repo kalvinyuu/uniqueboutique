@@ -4,11 +4,10 @@ import { useShoppingCart } from 'use-shopping-cart'
 export default function CheckoutButton() {
   const [status, setStatus] = useState('idle')
   const { redirectToCheckout, cartCount, totalPrice, cartDetails } =
-    useShoppingCart()
-
-  async function handleClick(event) {
-    event.preventDefault()
-    if (cartCount > 0) {
+      useShoppingCart()
+    
+  async function handleClick() {
+    if (cartCount !== undefined && cartCount > 0) {
       setStatus('loading')
       try {
         const res = await fetch('/session', {

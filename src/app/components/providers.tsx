@@ -3,14 +3,12 @@
 import React from 'react'
 import { CartProvider as USCProvider } from 'use-shopping-cart'
 
-function CartProvider({ children }) {
+function CartProvider({ children }: { children: React.ReactNode }) {
   return (
     <USCProvider
-      mode="checkout-session"
-      stripe={process.env.NEXT_PUBLIC_STRIPE_KEY}
+      cartMode ="checkout-session"
+      stripe = {process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
       currency={'GBP'}
-      allowedCountries={['US', 'GB', 'CA']}
-      billingAddressCollection={true}
     >
       {children}
     </USCProvider>

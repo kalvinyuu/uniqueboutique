@@ -1,4 +1,5 @@
 // Your file containing the getAllProducts function
+import { Product} from "@/app/types"
 import { productCatalouge } from '@/db/schema';
 import {db} from "@/db/index";
 import { NextResponse } from 'next/server'
@@ -12,6 +13,7 @@ export default async function getAllProducts(): Promise<Product[]> {
             image_location: productCatalouge.imageLocation,
 	    category: productCatalouge.category,
         }).from(productCatalouge);
+	console.log(results)
         return results;
     } catch (error) {
         console.error('Error fetching products:', error);

@@ -1,0 +1,22 @@
+'use client'
+
+import React from 'react';
+import { CartProvider as USCProvider, } from 'use-shopping-cart';
+
+function CartProvider({ children }: { children: React.ReactNode }) {
+  const checkoutSessionConfig = {
+    cartMode: "checkout-session",
+    stripe: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+    currency: 'GBP',
+    shouldPersist: false, // Add this line
+  };
+
+  return (
+    <USCProvider {...checkoutSessionConfig}>
+      {children}
+    </USCProvider>
+  );
+}
+
+export default CartProvider;
+
