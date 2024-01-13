@@ -2,6 +2,7 @@ import { useShoppingCart } from 'use-shopping-cart'
 import CartItem from './CartItem'
 import CheckoutButton from './checkoutButton'
 
+
 export default function ShoppingCart() {
   const { shouldDisplayCart, cartCount, cartDetails } = useShoppingCart()
   return (
@@ -11,7 +12,7 @@ export default function ShoppingCart() {
       }`}
     >
       {cartCount && cartCount > 0 ? (
-        <>
+        <> 
           {Object.values(cartDetails ?? {}).map((entry) => (
             <CartItem key={entry.id} item={entry} />
           ))}
