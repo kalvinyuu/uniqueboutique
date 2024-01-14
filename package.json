@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-      "build": "sed -i '83s/.*/image: string/' node_modules/use_shopping_cart/core/index.d.ts && next build",
+      "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "introspect": "drizzle-kit introspect:mysql"
