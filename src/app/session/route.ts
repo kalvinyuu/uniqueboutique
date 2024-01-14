@@ -15,9 +15,5 @@ export async function POST(request: Request) {
     success_url: `${headers().get('origin')}/success`,
     cancel_url: `${headers().get('origin')}/`
   })
-  return {
-    status: 200,
-    body: { sessionId: checkoutSession.id },
-    headers: { 'Content-Type': 'application/json' }
-  };
+  return Response.json({ sessionId: checkoutSession.id })
 }
