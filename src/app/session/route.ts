@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { products } from '../data/products'
 import { validateCartItems } from 'use-shopping-cart/utilities'
 
-export async function POST(request) {
+export async function POST(request: Request) {
   const inventory = products
   const cartProducts = await request.json()
   const line_items = validateCartItems(inventory, cartProducts)
@@ -15,5 +15,9 @@ export async function POST(request) {
     success_url: `${headers().get('origin')}/success`,
     cancel_url: `${headers().get('origin')}/`
   })
-  return Response.json({ sessionId: checkoutSession.id })
+  return {
+    status: 200,
+    body: { sessionId: checkoutSession.id },
+    headers: { 'Content-Type': 'application/json' }
+  };
 }
