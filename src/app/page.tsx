@@ -20,7 +20,7 @@ async function Products() {
 	    <div className="justify-center products-center">
 		<Link href={`/${product.id}`}>
 		    <Image
-			src={`/images/productCatalouge/${product.image_location}`}
+			src={`/images/productCatalouge/${product.imageLocation}`}
 			width={500}
 			height={500}
 			alt="Picture of the author"
