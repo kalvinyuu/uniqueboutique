@@ -10,7 +10,7 @@ export default async function getAllProducts(): Promise<Product[]> {
             id: productCatalouge.id,
             name: productCatalouge.name,
             price: productCatalouge.price,
-            image_location: productCatalouge.imageLocation,
+            imageLocation: productCatalouge.imageLocation,
 	    category: productCatalouge.category,
         }).from(productCatalouge);
 	console.log(results)
