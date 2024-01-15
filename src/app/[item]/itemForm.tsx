@@ -15,13 +15,13 @@ export default function ItemForm({product, size, colourTable,
     const [message, setMessage] = useState<string>('');
     const { addItem } = useShoppingCart()
 
-    function getObjectById(array:StripeProduct[], id:number) {
+    function getObjectById(array:StripeProduct[], id:string) {
 	return array.find(item => item.id === id);
     }
 
-    
+     
     // Example usage
-    const stripeProduct = getObjectById(products, product.id);
+    const stripeProduct = getObjectById(products, product.id.toString());
     
     const addToCart = () => {
 	if (stripeProduct) {

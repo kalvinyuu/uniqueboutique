@@ -2,6 +2,7 @@
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 import Image from 'next/image'
 import {Item} from '@/app/types'
+
 export default function CartItem({ item }: {item: Item}) {
   const { name, image, quantity, price, id } = item
   const { removeItem } = useShoppingCart()
@@ -12,7 +13,7 @@ export default function CartItem({ item }: {item: Item}) {
 
   return (
     <div className="flex items-center gap-4 mb-3">
-       <Image alt={`${name}`} src={`${image}`} width={50} height={50} />
+       <Image alt={`${name}`} src={`/images/${image}`} width={50} height={50} />
       <div>
         {name} <span className="text-xs">({quantity})</span>
       </div>

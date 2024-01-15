@@ -37,20 +37,6 @@ export type CartItem = {
 
 export type Cart = CartItem[];
 
-export type Action =| { type: 'ADD_TO_CART';
-	id: number;
-	name: string;
-	image_location: string;
-	price: string;
-	category: string;
-	size: string;
-	size_id: number;
-	colour: string;
-	colour_id: number;
-	ribbon: string | null ;
-	ribbon_id: number | null; }
-    | { type: 'REMOVE_FROM_CART'; id: number };
-
 export type ProductCatalouge = {
   id: number;
   name: string;
@@ -68,11 +54,10 @@ export type Item = {
 }
 
 export type StripeProduct = {
-    id: number,
-    sku: string
+    id: string,
+    price_id: string
     name: string,
     price: number,
     currency: string,
-    image: string, // Corrected path
-
+    image: string, 
 }
