@@ -1,0 +1,15 @@
+ import { cache } from 'react'
+
+
+const getProduct = cache(async (itemId: number) => {
+  const product = await db.query.productCatalouge.findFirst({
+    where: eq(ProductCatalouge.id, itemId),
+  });
+  return product;
+});
+
+// Create a resource for fetching colour data
+const getColourTable = cache(async () => {
+  const colourTable = await db.select().from(Colour);
+  return colourTable;
+});

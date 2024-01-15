@@ -16,4 +16,5 @@ export async function POST(request: Request) {
     cancel_url: `${headers().get('origin')}/`
   })
   return Response.json({ sessionId: checkoutSession.id })
+
 }

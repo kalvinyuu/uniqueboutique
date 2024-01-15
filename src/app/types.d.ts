@@ -61,3 +61,5 @@ export type StripeProduct = {
     currency: string,
     image: string, 
 }
+
+export type ColourTable = { id: number; colour: string }[];
