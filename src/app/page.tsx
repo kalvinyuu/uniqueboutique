@@ -1,6 +1,7 @@
 import getAllProducts from '@/lib/getProducts'
 import Image from 'next/image'
 import Link from "next/link";
+
 export default function Home() {
   return (
       <div className="overflow-hidden">
@@ -13,7 +14,6 @@ export default function Home() {
 }
 async function Products() {
   const products = await getAllProducts();
-    console.log(products)
   return (
       <div className="grid">
       {products.map(product => (

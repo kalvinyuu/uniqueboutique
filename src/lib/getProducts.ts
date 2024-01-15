@@ -2,7 +2,6 @@
 import { Product} from "@/app/types"
 import { productCatalouge } from '@/db/schema';
 import {db} from "@/db/index";
-import { NextResponse } from 'next/server'
  
 export default async function getAllProducts(): Promise<Product[]> {
     try {

@@ -4,7 +4,6 @@ import { eq } from 'drizzle-orm';
 import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
 import { Size, Colour, Ribbon, Product, ProductCatalouge } from "@/app/types"
-import { CartProvider } from "@/app/components/cartContext"
  
 type colourTable = { id: number; colour: string }[];
  
@@ -41,7 +40,6 @@ export default async function Page({ params }: { params: { item: number } }) {
 
     await findSizeCategory()
     return (
-	<CartProvider>
         <div className="flex flex-row">
 
             {product ? (
@@ -64,6 +62,5 @@ export default async function Page({ params }: { params: { item: number } }) {
                 <div>No product found</div>
             )} 
         </div>
-    </CartProvider>
     );
 }
