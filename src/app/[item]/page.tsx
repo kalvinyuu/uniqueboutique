@@ -4,7 +4,6 @@ import ItemForm from '@/app/[item]/itemForm'
 import {getProduct, getColourTable, getSizeCategory} from "@/app/utils"
 
 export default async function Page({ params }: { params: { item: number } }) {
-    console.log(params.item)
     const product = await getProduct(params.item)
     const { size, ribbonTable } = await getSizeCategory(params.item);
     const colourTable = await getColourTable()
@@ -28,7 +27,7 @@ export default async function Page({ params }: { params: { item: number } }) {
 			      colourTable={colourTable} /> 
                 </div>
             ) : (
-                <div>No product found</div>
+                <p>No product found</p>
             )} 
         </div>
     );

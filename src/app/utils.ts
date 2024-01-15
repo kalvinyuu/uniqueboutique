@@ -6,6 +6,7 @@ import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable } from "@/
 
 
 export const getProduct = cache(async (itemId: number) => {
+    console.log(itemId)
   const product = await db.query.productCatalouge.findFirst({
     where: eq(productCatalouge.id, itemId),
   });
@@ -47,4 +48,19 @@ export const getSizeCategory = cache(async (x: number) => {
     return {size, ribbonTable}
 });
 
-   
+ 
+export const getAllProducts = cache(async() => {
+    try {
+        const results: Product[] = await db.select({
+            id: productCatalouge.id,
+            name: productCatalouge.name,
+            price: productCatalouge.price,
+            imageLocation: productCatalouge.imageLocation,
+	    category: productCatalouge.category,
+        }).from(productCatalouge);
+        return results;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        throw new Error('Failed to fetch data');
+    }
+})

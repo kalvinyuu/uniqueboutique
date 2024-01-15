@@ -1,4 +1,4 @@
-import getAllProducts from '@/lib/getProducts'
+import {getAllProducts} from '@/app/utils'
 import Image from 'next/image'
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ async function Products() {
       <div className="grid">
       {products.map(product => (
 	    <div className="justify-center products-center">
-		<Link href={`/${product.id}`}>
+		<Link href={`/${product.id}`}> // router 
 		    <Image
 			src={`/images/productCatalouge/${product.imageLocation}`}
 			width={500}
