@@ -16,12 +16,10 @@ export default function RootLayout({
     return (
 	<html lang="en">
 	    <body className="overflow-x-hidden">
-		<CartProvider>
 		    <UserProvider>
 			<Navbar />
 			{children}
 		    </UserProvider>
-		</CartProvider>
 	    </body>
 	</html>
     )
