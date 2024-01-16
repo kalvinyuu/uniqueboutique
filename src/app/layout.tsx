@@ -11,16 +11,16 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-  const pathname = usePathname()
-  console.log({ pathname })
+    const pathname = usePathname()
+    console.log({ pathname })
     return (
 	<html lang="en">
 	    <body className="overflow-x-hidden">
 		<CartProvider>
-		<UserProvider>
-		    <Navbar />
-		    {children}
-		</UserProvider>
+		    <UserProvider>
+			<Navbar />
+			{children}
+		    </UserProvider>
 		</CartProvider>
 	    </body>
 	</html>
