@@ -19,6 +19,7 @@ export default async function Page({ params }: { params: { item: number } }) {
                         width={500}
                         height={500}
                         alt="Picture of the author"
+			loading="lazy"
                     />
                     <p>{product.price}</p> 
 		    <ItemForm product={product}
