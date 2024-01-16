@@ -51,13 +51,7 @@ export const getSizeCategory = cache(async (x: number) => {
  
 export const getAllProducts = cache(async() => {
     try {
-        const results: Product[] = await db.select({
-            id: productCatalouge.id,
-            name: productCatalouge.name,
-            price: productCatalouge.price,
-            imageLocation: productCatalouge.imageLocation,
-	    category: productCatalouge.category,
-        }).from(productCatalouge);
+        const results: Product[] = await db.select().from(productCatalouge);
         return results;
     } catch (error) {
         console.error('Error fetching products:', error);
