@@ -1,8 +1,3 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    cpus: 1,
-  },
-};
+const nextConfig = {};
 module.exports = nextConfig

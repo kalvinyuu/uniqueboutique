@@ -7,6 +7,7 @@ export async function POST(request: Request) {
   const inventory = products
   const cartProducts = await request.json()
   const line_items = validateCartItems(inventory, cartProducts)
+    console.log('line_items', line_items)
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: 'payment',
     submit_type: 'pay',

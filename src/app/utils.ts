@@ -6,7 +6,6 @@ import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable } from "@/
 
 
 export const getProduct = cache(async (itemId: number) => {
-    console.log(itemId)
   const product = await db.query.productCatalouge.findFirst({
     where: eq(productCatalouge.id, itemId),
   });
