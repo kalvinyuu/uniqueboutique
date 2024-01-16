@@ -17,9 +17,3 @@ export const products = [
     },
 ];
 
-// Example of using the image paths (replace this with your actual usage)
-products.forEach(product => {
-    const imagePath = product.image;
-    // Your code using imagePath...
-});
-
