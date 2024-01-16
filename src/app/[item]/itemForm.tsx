@@ -1,6 +1,9 @@
 "use client"
 import { Size, Colour, Ribbon, Product, StripeProduct } from "@/app/types"
 import { useState } from 'react';
+import {products } from "@/app/data/products"
+import { formatCurrencyString, useShoppingCart } from 'use-shopping-cart'
+
 
 export default function ItemForm({
     product, size, colourTable, ribbonTable}: {
@@ -9,6 +12,31 @@ export default function ItemForm({
     const [selectedColour, setSelectedColour] = useState<string>('');
     const [selectedRibbon, setSelectedRibbon] = useState<string | null>(null);
     const [message, setMessage] = useState<string>('');
+    const { addItem } = useShoppingCart()
+
+    function getObjectById(array:StripeProduct[], id:string) {
+	return array.find(item => item.id === id);
+    }
+
+    
+    // Example usage
+    const stripeProduct = getObjectById(products, product.id.toString());
+    
+    const addToCart = () => {
+	if (stripeProduct) {
+	    addItem(stripeProduct, {
+		count: 1,
+		product_metadata: {
+		    size: selectedSize,
+		    msg: message,
+		    colour: selectedColour,
+		    ribbon: selectedRibbon,
+		}
+	    });
+	} else {
+	    console.error("Product not found!"); // Or handle the case where the product is not found
+	}
+    };
 
 
     return (
@@ -58,6 +86,9 @@ export default function ItemForm({
 		    placeholder="Type your message here"
 		    />
 		</label>
+		<button className="mt-4" onClick={addToCart} disabled={!selectedSize || !selectedColour}>
+		    Add to Cart
+		</button>
 	    </div>
 	</div>
     );
