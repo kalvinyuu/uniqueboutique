@@ -2,13 +2,11 @@
 import {useUser, } from "@auth0/nextjs-auth0/client"
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import {createPortal} from "react-dom"
 import ShoppingCart from '@/app/components/cart'
 import {useShoppingCart} from "use-shopping-cart"
 
-
-const Navbar = () => {
+export function Navbar() {
   const [showModal2, setShowModal2] = useState(false);
   const userRef = useRef(null);
   const {handleCartClick} = useShoppingCart()
@@ -27,7 +25,6 @@ const Navbar = () => {
             <ProfileClient />, userRef.current
           )}
         </button>
-
         <button 
 	    onClick={() => handleCartClick()}
             className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 items-center">
@@ -39,7 +36,6 @@ const Navbar = () => {
   );
 };
 
-export { Navbar };
 
 function ProfileClient() {
     const { user, error, isLoading, } = useUser();
