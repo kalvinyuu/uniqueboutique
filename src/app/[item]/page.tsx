@@ -1,4 +1,3 @@
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
 import {getProduct, getColourTable, getSizeCategory} from "@/app/utils"

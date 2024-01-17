@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     mode: 'payment',
     submit_type: 'pay',
     line_items,
-    success_url: `${headers().get('origin')}/success`,
+    success_url: `${headers().get('origin')}/`,
     cancel_url: `${headers().get('origin')}/`
   })
   return Response.json({ sessionId: checkoutSession.id })
