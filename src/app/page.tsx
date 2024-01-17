@@ -16,9 +16,9 @@ async function Products() {
     try{
 	const products = await getAllProducts();
 	return (
-	    <div className="grid">
+	    <div className="grid justify-center">
 	    {products.map(product => (
-		<div key={product.id} className="justify-center products-center">
+		<div key={product.id} className="justify-center products-center mx-4 my-2">
 		    <Link href={`/${product.id}`}> 
 			<Image
 			src={`/images/productCatalouge/${product.imageLocation}`}

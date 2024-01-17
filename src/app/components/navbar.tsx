@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {createPortal} from "react-dom"
 import ShoppingCart from '@/app/components/cart'
 import {useShoppingCart} from "use-shopping-cart"
-import { UserButton } from "@clerk/nextjs";
+import { SignInButton } from "@clerk/nextjs";
 
 export function Navbar() {
   const [showModal2, setShowModal2] = useState(false);
@@ -12,10 +12,10 @@ export function Navbar() {
   const {handleCartClick} = useShoppingCart()
 
   return (
-    <nav className="fixed top-0 left-0 w-full flex items-center justify-between p-4 bg-gray-800 text-white">
+    <nav className="sticky top-0 w-full flex items-center justify-between p-4 bg-gray-800 text-white mb-8">
       <div className="text-lg font-bold">Unique Boutique</div>
       <div>
-	  <UserButton afterSignOutUrl="/"/>
+	  <SignInButton/>
         <button 
 	    onClick={() => handleCartClick()}
             className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 items-center">
