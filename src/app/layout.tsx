@@ -1,8 +1,8 @@
 'use client'
 import './globals.css'
-import { UserProvider } from '@auth0/nextjs-auth0/client';
 import  {Navbar}  from "@/app/components/navbar";
 import CartProvider from './components/providers'
+import { ClerkProvider } from '@clerk/nextjs'
  
 export default function RootLayout({
     children,
@@ -12,12 +12,12 @@ export default function RootLayout({
     return (
 	<html lang="en">
 	    <body className="overflow-x-hidden">
+		<ClerkProvider>
 		<CartProvider>
-		    <UserProvider>
 			<Navbar />
 			{children}
-		    </UserProvider>
 		</CartProvider>
+		</ClerkProvider>
 	    </body>
 	</html>
     )
