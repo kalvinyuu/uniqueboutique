@@ -1,8 +1,9 @@
-"use server";
- 
+"use server";`` 
 import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
- 
+ import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
+import { db } from "@/db/index";
+
 export async function setRole(formData: FormData) {
   // Check that the user trying to set the role is an admin
   if (!checkRole("admin")) {
@@ -21,3 +22,9 @@ export async function setRole(formData: FormData) {
     return { message: err };
   }
 }
+
+export async function createProduct(name:string, price:string, imageLocation:string, category:string) {
+  await db.insert(productCatalouge).values({ name, imageLocation, price, category });
+  return { success: true, message: 'Product created successfully!' };
+}
+
