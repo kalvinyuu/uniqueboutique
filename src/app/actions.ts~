@@ -1,7 +1,8 @@
-"use server";`` 
+"use server" 
+
 import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
- import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
+import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import { db } from "@/db/index";
 
 export async function setRole(formData: FormData) {
@@ -23,8 +24,19 @@ export async function setRole(formData: FormData) {
   }
 }
 
-export async function createProduct(name:string, price:string, imageLocation:string, category:string) {
-  await db.insert(productCatalouge).values({ name, imageLocation, price, category });
+export async function createProduct(formData: FormData) {
+    const info = {
+	name: formData.get('name'),
+	price: formData.get('price'),
+	imageLocation: formData.get('imageLocation'),
+	category: formData.get('category'),
+    }
+    await db.insert(productCatalouge).values({ info.name,
+					       info.imageLocation,
+					       info.price,
+					       info.category });
+    
   return { success: true, message: 'Product created successfully!' };
 }
+
 

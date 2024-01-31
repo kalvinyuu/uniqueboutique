@@ -1,9 +1,10 @@
+"use server"
+
 import { cache } from 'react'
 import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
 import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable } from "@/app/types" 
-import { constants } from 'buffer';
 
 export const getProduct = cache(async (itemId: number) => {
     console.log(itemId)
@@ -53,3 +54,4 @@ export const getAllProducts = cache(async() => {
         throw new Error('Failed to fetch data');
     }
 })
+
