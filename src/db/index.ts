@@ -3,7 +3,7 @@ import * as schema from './schema';
 import mysql from "mysql2/promise";
 import fs from 'fs';
 
-const connection = await mysql.createConnection({
+const connection = mysql.createPool({
     host: process.env.HOST,
     user: process.env.USERNAME,
     database: process.env.DATABASE,
@@ -12,5 +12,5 @@ const connection = await mysql.createConnection({
         ca: fs.readFileSync('/etc/ssl/cert.pem'), // Path to CA certificate
     },
 });
- 
+
 export const db = drizzle(connection, { schema, mode: 'planetscale' });

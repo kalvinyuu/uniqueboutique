@@ -1,25 +1,29 @@
 'use client'
-import { useFormState } from "react-server-dom-webpack/server.edge";
+import  { useFormState }  from "react-dom" 
 import { createProduct } from "@/app/actions";
+import { boolean } from "drizzle-orm/pg-core";
 
+const initialState = {
+    message: ""
+}
+
+//TODO
+//implement useFormStatus and zod for validating
 
 export default function Crud() {
-  const [formState, submit] = useFormState({
-    name: '',
-    price: '',
-    imageLocation: '',
-    category: '',
-  }, createProduct); // Pass createProduct as the action function
+    const [state, submit] = useFormState(
+	createProduct,
+	initialState); 
 
 
 
-    function handleSubmit() {
-	if (formState.name.trim() === '' ||formState.price.trim() === '' || formState.imageLocation.trim() === '' || formState.category === '') {
+    /*function handleSubmit() {
+	if (initialState.name === '' || initialState.price.trim() === '' || initialState.imageLocation.trim() === '' || initialState.category === '') {
 	    alert('Please fill in all fields.');
 	} else {
 	    console.log('Form submitted with errors try again');
 	}
-    };
+    };*/
 
     return (
 	<>
@@ -41,7 +45,7 @@ export default function Crud() {
 			<option value="womens">Womens</option>
 			<option value="kids">Kids</option>
 		    </select>
-		    <button type="submit" onClick={handleSubmit}>Submit</button>
+		    <button type="submit" >Submit</button>
 		</form>
 	    </div>
 	</>
