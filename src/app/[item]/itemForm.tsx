@@ -1,7 +1,7 @@
 "use client"
 import { Size, Colour, Ribbon, Product, StripeProduct } from "@/app/types"
 import { useState } from 'react';
-import {products } from "@/app/data/products"
+import {products} from "@/app/data/products"
 import { formatCurrencyString, useShoppingCart } from 'use-shopping-cart'
 
 

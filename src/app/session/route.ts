@@ -1,10 +1,11 @@
 import { stripe } from '../../lib/stripe'
 import { headers } from 'next/headers'
-import { products } from '../data/products'
+import {promises as fs} from 'fs'
 import { validateCartItems } from 'use-shopping-cart/utilities'
 
 export async function POST(request: Request) {
-  const inventory = products
+    const file = await fs.readFile(process.cwd() + '/app/data/products.json', 'utf8')
+    const inventory = JSON.parse(file)
   const cartProducts = await request.json()
   const line_items = validateCartItems(inventory, cartProducts)
     console.log('line_items', line_items)

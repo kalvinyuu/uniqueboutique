@@ -16,4 +16,3 @@ export const products = [
         image: "productCatalouge/kids_pjs.jpg", // Corrected path
     },
 ];
-
