@@ -1,5 +1,3 @@
-"use server"
-
 import { cache } from 'react'
 import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import { db } from "@/db/index";

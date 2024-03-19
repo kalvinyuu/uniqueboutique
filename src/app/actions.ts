@@ -5,7 +5,7 @@ import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
 import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import { db } from "@/db/index";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
+import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto"
 

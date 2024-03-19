@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
-import {getProduct, getColourTable, getSizeCategory} from "@/app/utils"
+import { getProduct, getColourTable, getSizeCategory } from "@/app/utils"
 
 export default async function Page({ params }: { params: { item: number } }) {
     const product = await getProduct(params.item)

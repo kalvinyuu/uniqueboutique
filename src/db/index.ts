@@ -5,12 +5,10 @@ import fs from 'fs';
 
 const connection = mysql.createPool({
     host: process.env.HOST,
+    port: 54737,
     user: process.env.USERNAME,
     database: process.env.DATABASE,
     password: process.env.PASSWORD,
-    ssl: {
-        ca: fs.readFileSync('/etc/ssl/cert.pem'), // Path to CA certificate
-    },
 });
 
-export const db = drizzle(connection, { schema, mode: 'planetscale' });
+export const db = drizzle(connection, { schema, mode: 'default' });
