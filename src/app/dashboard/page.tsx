@@ -4,6 +4,7 @@ import { clerkClient } from "@clerk/nextjs";
 import { setRole } from "@/app/actions";
 import Crud from "./crud"
 import Form from "./imageForm"
+import ImageBank from "./imageDisplay"
 
 export default function AdminDashboard(params: {
   searchParams: { search?: string };
@@ -19,6 +20,7 @@ export default function AdminDashboard(params: {
       <p>This page is restricted to users with the 'admin' role.</p>
       <Crud/>
       <Form/>
+      <ImageBank/>
     </>
   );
 }

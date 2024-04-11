@@ -1,6 +1,17 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, decimal, timestamp } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, decimal, timestamp, text } from "drizzle-orm/mysql-core"
 import { sql, relations } from "drizzle-orm"
 
+export const product_images = mysqlTable("product_images", {
+    productId: int("product_id").references(()=> productCatalouge.id),
+    imageId: int("image_id").references(() => images.imageId)
+})
+
+export const images = mysqlTable("images", {
+    imageId: int("image_id").autoincrement().notNull().primaryKey(),
+    url: text("url").notNull(),
+    width: int("width").notNull(),
+    height: int("height").notNull(),
+});
 
 export const addresses = mysqlTable("addresses", {
     addressId: int("address_id").autoincrement().notNull().primaryKey(),

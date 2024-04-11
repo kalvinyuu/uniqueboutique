@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { stripe } from '@/lib/stripe'
 import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
+import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images } from '@/db/schema'; 
 import { db } from "@/db/index";
 import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
@@ -127,6 +127,15 @@ export const getSignedURL = async ({
   )
 
     console.log({ success: url })
+
+    await db
+    .insert(images)
+    .values({
+      url: url.split("?")[0],
+      width: 0,
+      height: 0,
+    })
+    const results = await db.select().from(images)
     
-    return { success: { url, id: 1 } }
+    return { success: { url, id: results[0].imageId } }
 }

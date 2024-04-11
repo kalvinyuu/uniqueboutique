@@ -1,8 +1,8 @@
 import { cache } from 'react'
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
+import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images} from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
-import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable } from "@/app/types" 
+import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images } from "@/app/types" 
 
 export const getProduct = cache(async (itemId: number) => {
     console.log(itemId)
@@ -20,6 +20,12 @@ export const getColourTable = cache(async () => {
   const colourTable = await db.select().from(colour);
   return colourTable;
 });
+
+export const getImages = cache(async () => {
+    const image: Images[] = await db.select().from(images);
+  return image;
+});
+
 
 export const getSizeCategory = cache(async (x: number) => {
     let size: Size = [{sizeId: 1,
