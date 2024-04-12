@@ -5,7 +5,6 @@ import { eq } from 'drizzle-orm';
 import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images } from "@/app/types" 
 
 export const getProduct = cache(async (itemId: number) => {
-    console.log(itemId)
   const product = await db.query.productCatalouge.findFirst({
     where: eq(productCatalouge.id, itemId),
   });

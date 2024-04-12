@@ -36,7 +36,7 @@ export async function setRole(formData: FormData) {
   }
 }
 
-export async function createProduct(prevState: any, formData: FormData) {
+export async function createProduct( formData: FormData) {
     const info = format.parse({
 	name: formData.get('name'),
 	price: formData.get('price'),

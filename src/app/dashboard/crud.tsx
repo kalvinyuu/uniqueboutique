@@ -1,24 +1,15 @@
-'use client'
-import { useState } from 'react';
-import { useFormState } from 'react-dom'; // Assuming this is the correct import
 import { createProduct } from '@/app/actions';
-import ProductImageForm from '@/app/dashboard/productImage' 
-const initialState = {
-    message: ''
-};
+import {getImages} from "@/app/utils"
+import {Images} from "@/app/types"
+import Image from "next/image"
 
-export default function Crud() {
-    const [state, submit] = useFormState(createProduct, initialState);
-    const [imageURL, setImageURL] = useState('');
-
-    function handleClick(e) {
-	setImageURL(e.target.value)
-    }
+export default async function Crud() {
+    const images: Images[] = await getImages();
 
     return (
         <>
             <div>
-                <form action={submit}>
+                <form action={createProduct}>
                     <label htmlFor="name">Name:</label>
                     <input className="text-black" type="text" id="name" name="name" />
 
@@ -39,9 +30,16 @@ export default function Crud() {
 
 		    
                     <label htmlFor="imageLocation">Image Location:</label>
-		    <ProductImageForm
-		    onDo={handleClick} />
-                    <input value={imageURL}  className="text-black" type="text" id="imageLocation" name="imageLocation" readOnly={true} />
+		    <div className="grid justify-center">
+			{images.map(image => (
+			    <div key={image.imageId} className="justify-center products-center mx-4 my-2">
+				<button value={image.url} >
+				    <Image className="object-cover" src={image.url} alt="pjs" width={200} height={200} />
+				</button>
+			    </div>
+			))}
+		    </div>
+
 
                     <button type="submit">Submit</button>
                 </form>
