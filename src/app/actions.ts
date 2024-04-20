@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { stripe } from '@/lib/stripe'
 import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images } from '@/db/schema'; 
+import { productCatalouge, images } from '@/db/schema'; 
 import { db } from "@/db/index";
 import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
@@ -36,7 +36,7 @@ export async function setRole(formData: FormData) {
   }
 }
 
-export async function createProduct( formData: FormData) {
+export async function createProduct( formData: FormData ) {
     const info = format.parse({
 	name: formData.get('name'),
 	price: formData.get('price'),

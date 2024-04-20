@@ -1,16 +1,17 @@
 import {getImages} from "@/app/utils"
 import {Images} from "@/app/types"
 import Image from "next/image"
+import Link from "next/link"
 
 export default async function ProductImageForm() {
     const images: Images[] = await getImages();
-    return (
+       return (
         <div className="grid justify-center">
             {images.map(image => (
                 <div key={image.imageId} className="justify-center products-center mx-4 my-2">
-		    <button value={image.url}>
+		    <Link href={`/dashboard/${image.imageId}`}>
                         <Image className="object-cover" src={image.url} alt="pjs" width={200} height={200} />
-		    </button>
+		    </Link>
                 </div>
             ))}
         </div>

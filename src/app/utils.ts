@@ -25,6 +25,15 @@ export const getImages = cache(async () => {
   return image;
 });
 
+export const getImage = cache(async (imageId: number) => {
+    const image = await db.query.images.findFirst({
+	where: eq(images.imageId, imageId ),
+    });
+        if (!image) {
+    throw new Error(`image with id ${imageId} not found`);
+  }
+    return image;
+});
 
 export const getSizeCategory = cache(async (x: number) => {
     let size: Size = [{sizeId: 1,

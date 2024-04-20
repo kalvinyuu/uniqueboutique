@@ -12,6 +12,7 @@ export default function Home() {
       </div>
   )
 }
+
 async function Products() {
     try{
 	const products = await getAllProducts();
