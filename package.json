@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.514.0",
+    "@aws-sdk/s3-presigned-post": "^3.556.0",
     "@aws-sdk/s3-request-presigner": "^3.525.0",
     "@clerk/nextjs": "^4.29.3",
     "@stripe/react-stripe-js": "^2.4.0",
@@ -21,7 +22,6 @@
     "@vercel/blob": "^0.0.2",
     "autoprefixer": "10.4.14",
     "drizzle-orm": "^0.29.3",
-    "install": "^0.13.0",
     "mysql2": "^3.9.3",
     "next": "^14.1.4",
     "npm": "^10.2.4",

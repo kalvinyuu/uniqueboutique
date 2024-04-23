@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import {getSignedURL} from "@/app/actions"
-import {getImages} from "@/app/utils"
 
 export default function Form() {
     const [file, setFile] = useState<File | null>(null)
@@ -105,7 +104,7 @@ export default function Form() {
                 className="bg-transparent flex-1 border-none outline-none hidden"
                 name="media"
                 type="file"
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/jpeg,image/png"
                 onChange={handleFileChange}
               />
             </label>

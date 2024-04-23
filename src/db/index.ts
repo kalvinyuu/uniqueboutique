@@ -3,7 +3,7 @@ import * as schema from './schema';
 import mysql from "mysql2/promise";
 import fs from 'fs';
 
-const connection = await mysql.createConnection({
+const connection = mysql.createPool({
     host: process.env.HOST,
     port: 54737,
     user: process.env.USERNAME,
