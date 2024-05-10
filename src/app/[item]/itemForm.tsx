@@ -12,6 +12,7 @@ export default function ItemForm({
     const [selectedColour, setSelectedColour] = useState<string>('');
     const [selectedRibbon, setSelectedRibbon] = useState<string | null>(null);
     const [message, setMessage] = useState<string>('');
+    const [productMetadata, setProductMetadata] = useState<Array<{ [key: string]: string }>>([]);
     const { addItem } = useShoppingCart()
 
     function getObjectById(array:StripeProduct[], id:string) {
@@ -26,12 +27,16 @@ export default function ItemForm({
 	if (stripeProduct) {
 	    addItem(stripeProduct, {
 		count: 1,
-		product_metadata: {
-		    size: selectedSize,
-		    msg: message,
-		    colour: selectedColour,
-		    ribbon: selectedRibbon,
-		}
+                product_metadata: [
+                    ...productMetadata,
+                    {
+                        size: selectedSize,
+                        msg: message,
+                        colour: selectedColour,
+                        ribbon: selectedRibbon || "",
+			productId: product.id,
+                    }
+                ]
 	    });
 	} else {
 	    console.error("Product not found!"); // Or handle the case where the product is not found

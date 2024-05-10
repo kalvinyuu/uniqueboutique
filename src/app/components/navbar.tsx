@@ -1,4 +1,3 @@
-"use client"
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import {createPortal} from "react-dom"
@@ -12,8 +11,6 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 export function Navbar() {
-    const [showModal2, setShowModal2] = useState(false);
-    const userRef = useRef(null);
     const {handleCartClick} = useShoppingCart()
     
     return (

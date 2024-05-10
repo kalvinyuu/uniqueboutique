@@ -1,0 +1,1 @@
+ALTER TABLE `users` RENAME COLUMN `auth0_user_id` TO `auth_user_id`;
