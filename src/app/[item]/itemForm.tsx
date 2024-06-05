@@ -13,33 +13,39 @@ export default function ItemForm({
     const [selectedRibbon, setSelectedRibbon] = useState<string | null>(null);
     const [message, setMessage] = useState<string>('');
     const [productMetadata, setProductMetadata] = useState<Array<{ [key: string]: string }>>([]);
+
     const { addItem } = useShoppingCart()
 
     function getObjectById(array:StripeProduct[], id:string) {
 	return array.find(item => item.id === id);
     }
-
+    
     
     // Example usage
     const stripeProduct = getObjectById(products, product.id.toString());
-    
-    const addToCart = () => {
-	if (stripeProduct) {
-	    addItem(stripeProduct, {
-		count: 1,
-                product_metadata: [
-                    ...productMetadata,
-                    {
-                        size: selectedSize,
-                        msg: message,
-                        colour: selectedColour,
-                        ribbon: selectedRibbon || "",
-			productId: product.id,
-                    }
-                ]
-	    });
+
+    function addToCart() {
+
+    // Create a new metadata object for the current selection
+    const newMetadata = {
+        size: selectedSize,
+        msg: message,
+        productId: product.id.toString(), // Convert productId to string
+        colour: selectedColour,
+        ribbon: selectedRibbon || "", // Use empty string if selectedRibbon is null
+    };
+
+    // Update the productMetadata state with the new metadata
+    setProductMetadata(prevMetadata => [...prevMetadata, newMetadata]);
+
+    if (stripeProduct) {
+        addItem(stripeProduct, {
+            count: 1,
+            product_metadata: [...productMetadata, newMetadata] // Pass the updated productMetadata directly
+        });
+
 	} else {
-	    console.error("Product not found!"); // Or handle the case where the product is not found
+	    console.error("Product not found!");
 	}
     };
 
@@ -72,7 +78,7 @@ export default function ItemForm({
 		{ribbonTable && ribbonTable.length > 0 && (
 		    <label className="block mt-4">
 			Select a ribbon:
-			<select onChange={(e) => { console.log('Selected Ribbon:', e.target.value); setSelectedRibbon(e.target.value); }}>
+			<select onChange={(e) => setSelectedRibbon(e.target.value)}>
 			    <option value="">Select Ribbon</option>
 			    {ribbonTable.map((r) => (
 				<option key={r.ribbonId} value={r.ribbon}>
