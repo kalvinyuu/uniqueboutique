@@ -30,10 +30,12 @@ export async function POST(request: NextRequest) {
       const checkoutSessionAsyncPaymentSucceeded = event.data.object;
 
       break;
-    case "checkout.session.completed":
+      case "checkout.session.completed":
+	  console.log('done')
 	  const completed: any = event.data.object;
 	  const address = completed.shipping_details.address
 	  const data = JSON.parse(completed.metadata.data)
+	  console.log(data)
 	  const res1 = await db
         .insert(addresses)
         .values({

@@ -9,10 +9,11 @@ export default function ItemForm({
     product, size, colourTable, ribbonTable}: {
 	product: Product, size: Size, colourTable: Colour, ribbonTable: Ribbon }) { 
     const [selectedSize, setSelectedSize] = useState<string>('');
-    const [selectedColour, setSelectedColour] = useState<string>('');
-    const [selectedRibbon, setSelectedRibbon] = useState<string | null>(null);
+    const [selectedColour, setSelectedColour] = useState<number>(0);
+    const [selectedRibbon, setSelectedRibbon] = useState<number>(0);
     const [message, setMessage] = useState<string>('');
-    const [productMetadata, setProductMetadata] = useState<Array<{ [key: string]: string }>>([]);
+     const [productMetadata, setProductMetadata] = useState<Array<{ size: string, msg: string, productId: number, colour: number, ribbon: number }>>([]);
+
 
     const { addItem } = useShoppingCart()
 
@@ -30,9 +31,9 @@ export default function ItemForm({
     const newMetadata = {
         size: selectedSize,
         msg: message,
-        productId: product.id.toString(), // Convert productId to string
+        productId: product.id, // Convert productId to string
         colour: selectedColour,
-        ribbon: selectedRibbon || "", // Use empty string if selectedRibbon is null
+        ribbon: selectedRibbon , // Use empty string if selectedRibbon is null
     };
 
     // Update the productMetadata state with the new metadata
@@ -66,10 +67,10 @@ export default function ItemForm({
 		</label>
 		<label className="block mt-4">
 		    What colour do you want?
-		    <select onChange={(e) => setSelectedColour(e.target.value)}>
+		    <select onChange={(e) => setSelectedColour(Number(e.target.value))}>
 			<option value="">Select Colour</option>
 			{colourTable.map((c) => (
-			    <option key={c.colourId} value={c.colour}>
+			    <option key={c.colourId} value={c.colourId}>
 				{c.colour}
 			    </option>
 			))}
@@ -78,10 +79,10 @@ export default function ItemForm({
 		{ribbonTable && ribbonTable.length > 0 && (
 		    <label className="block mt-4">
 			Select a ribbon:
-			<select onChange={(e) => setSelectedRibbon(e.target.value)}>
+			<select onChange={(e) => setSelectedRibbon(Number(e.target.value))}>
 			    <option value="">Select Ribbon</option>
 			    {ribbonTable.map((r) => (
-				<option key={r.ribbonId} value={r.ribbon}>
+				<option key={r.ribbonId} value={r.ribbonId}>
 				    {r.ribbon}
 				</option>
 			    ))}

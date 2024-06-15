@@ -10,7 +10,7 @@ export const productCatalouge = mysqlTable("product_catalouge", {
 });
 
 export const specificItem = mysqlTable("specific_item", {
-    id: int("id").primaryKey().notNull().autoincrement(),
+    id: int("id").notNull().autoincrement().primaryKey(),
     productId: int("product_id").references(()=>productCatalouge.id),
     size: varchar("size", { length: 100 }),
     colour: int("colour").references(()=>colour.colourId),
@@ -31,12 +31,12 @@ export const images = mysqlTable("images", {
 });
 
 export const colour = mysqlTable("colour", {
-    colourId: int("colour_id").autoincrement().notNull().primaryKey(),
+    id: int("colour_id").autoincrement().notNull().primaryKey(),
     colour: varchar("colour", { length: 100 }).notNull(),
 });
 
 export const ribbon = mysqlTable("ribbon", {
-    ribbonId: int("ribbon_id").autoincrement().notNull().primaryKey(),
+    id: int("ribbon_id").autoincrement().notNull().primaryKey(),
     ribbon: varchar("ribbon", { length: 100 }).notNull(),
 });
 

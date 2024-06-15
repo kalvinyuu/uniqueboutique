@@ -9,15 +9,6 @@ export const productCatalouge = mysqlTable("product_catalouge", {
     category: varchar("category", { length: 100 }).notNull(),
 });
 
-export const specificItem = mysqlTable("specific_item", {
-    id: int("id").notNull().primaryKey().autoincrement(),
-    productId: int("product_id").references(()=>productCatalouge.id),
-    size: varchar("size", { length: 100 }),
-    colour: varchar("colour", { length: 100 }),
-    ribbon: varchar("ribbon", { length: 100 }).notNull(),
-    message: varchar("message", { length: 100 }),
-});
-
 export const product_images = mysqlTable("product_images", {
     productId: int("product_id").references(()=> productCatalouge.id),
     imageId: int("image_id").references(() => images.imageId)

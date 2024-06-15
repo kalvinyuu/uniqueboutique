@@ -6,10 +6,10 @@ dotenv.config({
 });
 
 export default {
-    driver: "mysql2",
+    dialect: "mysql",
     schema: "./src/db/schema.ts",
     out: "./drizzle",
     dbCredentials: {
-	uri: process.env.DATABASE_URL,
+	url: process.env.DATABASE_URL,
     }
 } as Config;
