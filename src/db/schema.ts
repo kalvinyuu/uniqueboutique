@@ -68,6 +68,8 @@ export const orders = mysqlTable("orders", {
     userId: int("user_id").references(()=>users.id),
     orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
     totalAmount: decimal("total_amount", { precision: 10, scale: 2 }),
+    orderStatus: varchar('varchar', { length: 29, enum: ["Your order has been received.", 'Your order has been shipped.'] })
+	.notNull().default("Your order has been received."),
 });
 
 export const users = mysqlTable("users", {

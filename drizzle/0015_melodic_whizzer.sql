@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `varchar` varchar(29) DEFAULT 'Your order has been received.' NOT NULL;
