@@ -41,8 +41,8 @@ export default function ItemForm({
 	if (stripeProduct) {
             addItem(stripeProduct, {
 		count: 1,
-		product_metadata: {userId: user?.id,
-				   data: [...productMetadata, newMetadata]} // Pass the updated productMetadata directly
+		price_metadata: {userId: user?.id},
+		product_metadata: {[...productMetadata, newMetadata]} // Pass the updated productMetadata directly
             });
 	    
 	} else {

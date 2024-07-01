@@ -1,22 +1,22 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
-import { addresses, specificItem } from "@/db/schema";
+import { addresses, specificItem, orders, orderItems } from "@/db/schema";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
-  const sig = req.headers.get('stripe-signature');
-  let event;
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+    const sig = req.headers.get('stripe-signature');
+    let event;
 
-  try {
-    const body = await req.text(); // Read the body as text
-    event = stripe.webhooks.constructEvent(body, sig!, endpointSecret);
-  } catch (err) {
-    console.error('Error verifying webhook signature:', err);
-    return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
-  }
+    try {
+	const body = await req.text(); // Read the body as text
+	event = stripe.webhooks.constructEvent(body, sig!, endpointSecret);
+    } catch (err) {
+	console.error('Error verifying webhook signature:', err);
+	return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+    }
 
     switch (event.type) {
 	case "checkout.session.async_payment_failed":
@@ -29,33 +29,42 @@ export async function POST(req: NextRequest) {
 	    console.log(JSON.stringify(event.data.object))
 	    const completed: any = event.data.object;
 	    const address = completed.shipping_details.address;
-	    const data = JSON.parse(completed.metadata.data);
-
+	    const data = JSON.parse(completed.metadata.data.data);
+	    const username = JSON.parse(completed.metadata.data.userId);
+	    
 	    try {
-         await db.insert(addresses).values({
-          streetAddress: address.line1,
-          city: address.city,
-          postCode: address.postal_code,
-        });
+		await db.insert(addresses).values({
+		    streetAddress: address.line1,
+		    city: address.city,
+		    postCode: address.postal_code,
+		    userId: username,
+		});
 
-         await db.insert(specificItem).values({
-          size: data.size,
-          colour: data.colour,
-          productId: data.productId,
-          message: data.message,
-          ribbon: data.ribbon,
-        });
+		await db.insert(specificItem).values({
+		    size: data.size,
+		    colour: data.colour,
+		    productId: data.productId,
+		    message: data.message,
+		    ribbon: data.ribbon,
+		});
+		
+		await db.insert(orders).values({
+		    userId: username,
+		    totalAmount: completed.amount_total
+		})
+		await db.insert(orderItems).values({
+		    orderId
+		})
+		console.log('Data inserted successfully');
+	    } catch (dbError) {
+		console.error('Database insertion error:', dbError);
+		return NextResponse.json({ error: 'Database Error' }, { status: 500 });
+	    }
 
-        console.log('Data inserted successfully');
-      } catch (dbError) {
-        console.error('Database insertion error:', dbError);
-        return NextResponse.json({ error: 'Database Error' }, { status: 500 });
-      }
+	    break;
+	default:
+	    console.log(`Unhandled event type: ${event.type}`);
+    }
 
-      break;
-    default:
-      console.log(`Unhandled event type: ${event.type}`);
-  }
-
-  return NextResponse.json({ received: true }, { status: 200 });
+    return NextResponse.json({ received: true }, { status: 200 });
 }
