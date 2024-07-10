@@ -39,22 +39,29 @@ export async function POST(req: NextRequest) {
 		    postCode: address.postal_code,
 		    userId: username,
 		});
-
-		await db.insert(specificItem).values({
-		    size: data.size,
-		    colour: data.colour,
-		    productId: data.productId,
-		    message: data.message,
-		    ribbon: data.ribbon,
-		});
 		
-		await db.insert(orders).values({
+		const orderRes = await db.insert(orders).values({
 		    userId: username,
 		    totalAmount: completed.amount_total
 		})
-		await db.insert(orderItems).values({
-		    orderId
-		})
+
+		for (const item of data) {
+		    
+		    const specRes = await db.insert(specificItem).values({
+			size: item.size,
+			colour: item.colour,
+			productId: item.productId,
+			message: item.message,
+			ribbon: item.ribbon,
+		    })
+
+		    await db.insert(orderItems).values({
+			orderId: orderRes[0].insertId,
+			specificItemId: specRes[0].insertId,
+			price: item.price
+		    })
+		}
+		
 		console.log('Data inserted successfully');
 	    } catch (dbError) {
 		console.error('Database insertion error:', dbError);

@@ -32,6 +32,7 @@ export default function ItemForm({
             productId: product.id, // Convert productId to string
             colour: selectedColour,
             ribbon: selectedRibbon , // Use empty string if selectedRibbon is null
+	    price: product.price
 	    
 	};
 	

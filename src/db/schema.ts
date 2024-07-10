@@ -57,14 +57,13 @@ export const womansSize = mysqlTable("womans_size", {
 
 export const orderItems = mysqlTable("order_items", {
     orderItemId: int("order_item_id").autoincrement().notNull().primaryKey(),
-    orderId: int("order_id").references(()=>orders.orderId),
+    orderId: int("order_id").references(()=>orders.id),
     specificItemId: int("product_id").references(()=>specificItem.id),
-    quantity: int("quantity"),
     price: decimal("price", { precision: 10, scale: 2 })
 });
 
 export const orders = mysqlTable("orders", {
-    orderId: int("order_id").autoincrement().notNull().primaryKey(),
+    id: int("order_id").autoincrement().notNull().primaryKey(),
     userId: int("user_id").references(()=>users.id),
     orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
     totalAmount: decimal("total_amount", { precision: 10, scale: 2 }),
