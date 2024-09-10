@@ -32,6 +32,7 @@ export default function ItemForm({
             productId: product.id, // Convert productId to string
             colour: selectedColour,
             ribbon: selectedRibbon , // Use empty string if selectedRibbon is null
+	    price: product.price
 	    
 	};
 	
@@ -41,8 +42,8 @@ export default function ItemForm({
 	if (stripeProduct) {
             addItem(stripeProduct, {
 		count: 1,
-		price_metadata: {userId: user?.id},
-		product_metadata: {[...productMetadata, newMetadata]} // Pass the updated productMetadata directly
+                product_metadata: { data: [...productMetadata, newMetadata],
+		userID: user?.id}, 
             });
 	    
 	} else {

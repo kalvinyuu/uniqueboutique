@@ -20,7 +20,7 @@ async function Products() {
 	    <div className="grid justify-center">
 	    {products.map(product => (
 		<div key={product.id} className="justify-center products-center mx-4 my-2">
-		    <Link href={`/${product.id}`}> 
+		    <Link href={`/shop/${product.id}`}> 
 			<Image
 			src={`/images/productCatalouge/${product.imageLocation}`}
 			width={500}
@@ -41,6 +41,7 @@ async function Products() {
 	)
     } catch (error) {
 	console.error('Error fetching products:', error);
+	// You might want to handle the error, e.g., display an error message
 	return <div>Error fetching products</div>;
     }
 } 

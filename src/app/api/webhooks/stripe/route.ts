@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
 import { addresses, specificItem, orders, orderItems } from "@/db/schema";
-
+import { getUserID } from '@/app/utils';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
@@ -29,24 +29,28 @@ export async function POST(req: NextRequest) {
 	    console.log(JSON.stringify(event.data.object))
 	    const completed: any = event.data.object;
 	    const address = completed.shipping_details.address;
-	    const data = JSON.parse(completed.metadata.data.data);
-	    const username = JSON.parse(completed.metadata.data.userId);
+	    const metadata = JSON.parse(completed.metadata.data);
+            const data = metadata[0].data; // Assuming this is an array
+            const username = metadata[0].userID;
+	    console.log(username)
+	    const user = await getUserID(username)
 	    
+	    console.log(user)
 	    try {
 		await db.insert(addresses).values({
 		    streetAddress: address.line1,
 		    city: address.city,
 		    postCode: address.postal_code,
-		    userId: username,
+		    userId: user,
 		});
 		
 		const orderRes = await db.insert(orders).values({
-		    userId: username,
+		    userId: user,
 		    totalAmount: completed.amount_total
 		})
-
+		
 		for (const item of data) {
-		    
+		    console.log(item)
 		    const specRes = await db.insert(specificItem).values({
 			size: item.size,
 			colour: item.colour,
@@ -54,7 +58,7 @@ export async function POST(req: NextRequest) {
 			message: item.message,
 			ribbon: item.ribbon,
 		    })
-
+		    
 		    await db.insert(orderItems).values({
 			orderId: orderRes[0].insertId,
 			specificItemId: specRes[0].insertId,

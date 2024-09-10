@@ -1,4 +1,3 @@
-'use client'
 import './globals.css'
 import  {Navbar}  from "@/app/components/navbar";
 import CartProvider from './components/providers'

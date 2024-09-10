@@ -1,7 +1,6 @@
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize} from '@/db/schema'; 
 import Image from 'next/image'
-import ItemForm from '@/app/[item]/itemForm'
-import {getProduct, getColourTable, getSizeCategory} from "@/app/utils"
+import ItemForm from '@/app/shop/[item]/itemForm'
+import { getProduct, getColourTable, getSizeCategory } from "@/app/utils"
 
 export default async function Page({ params }: { params: { item: number } }) {
     const product = await getProduct(params.item)
@@ -23,9 +22,9 @@ export default async function Page({ params }: { params: { item: number } }) {
                     />
                     <p>{product.price}</p> 
 		    <ItemForm product={product}
-			      size={size}
+		    	      size={size}
 			      ribbonTable={ribbonTable}
-			      colourTable={colourTable} /> 
+			      colourTable={colourTable}/> 
                 </div>
             ) : (
                 <p>No product found</p>

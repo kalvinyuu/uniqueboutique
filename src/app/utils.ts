@@ -1,8 +1,34 @@
 import { cache } from 'react'
-import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images} from '@/db/schema'; 
+import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images, users, orders, orderItems, addresses, specificItem} from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
-import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images } from "@/app/types" 
+import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images,  } from "@/app/types" 
+
+export async function 
+
+export async function getOrderItems(orderID:number) {
+    const item = await db.query.orderItems.findMany({
+	where: eq(orderItems.orderId, orderID)
+    })
+    return item
+}
+
+
+export async function getOrders() {
+    const order = await db.select().from(orders).where(eq(orders.orderStatus, 'Your order has been received.'))
+    return order
+}
+
+export async function authManage(email:string|null, name:string|null, authId:string ) {
+    const userId = await getUserID(authId)
+    if (userId == 0) {
+	await db.insert(users).values({
+	    email: email,
+	    authId: authId,
+	    authName: name
+	})
+    }
+}
 
 export const getProduct = cache(async (itemId: number) => {
   const product = await db.query.productCatalouge.findFirst({
@@ -12,6 +38,14 @@ export const getProduct = cache(async (itemId: number) => {
     throw new Error(`Product with id ${itemId} not found`);
   }
   return product;
+});
+
+export const getUserID = cache(async (username: string) => {
+    const user = await db.query.users.findFirst({
+        where: eq(users.authId, username),
+    });
+    
+    return user ? user.id : 0;
 });
 
 // Create a resource for fetching colour data

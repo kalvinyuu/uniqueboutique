@@ -2,11 +2,31 @@ import { stripe } from '../../lib/stripe'
 import { headers } from 'next/headers'
 import { products } from '../data/products'
 import { validateCartItems } from 'use-shopping-cart/utilities'
-import { unknown } from 'zod'
+
+interface ProductData {
+  data: any[]; // Replace 'any' with the actual type if known
+}
+
+interface CartItem {
+  id: string;
+  price_id: string;
+  name: string;
+  price: number;
+  currency: string;
+  image: string;
+  quantity: number;
+  value: number;
+  timestamp: string;
+  price_data: any; // Replace 'any' with the actual type if known
+  product_data: ProductData;
+  formattedValue: string;
+  formattedPrice: string;
+}
+
 
 export async function POST(request: Request) {
     const inventory = products
-    const cartProducts = await request.json()
+    const cartProducts: {[key: string]: CartItem} = await request.json()
     const line_items = validateCartItems(inventory, cartProducts)
     console.log(cartProducts)
     const allProductData = Object.values(cartProducts).map(item => item.product_data);

@@ -4,6 +4,7 @@ import Image from "next/image"
 
 export default async function ImageBank() {
     const images: Images[] = await getImages();
+    
     return (
         <div className="grid justify-center">
             {images.map(image => (
