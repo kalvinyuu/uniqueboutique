@@ -57,23 +57,24 @@ export const womansSize = mysqlTable("womans_size", {
 
 export const orderItems = mysqlTable("order_items", {
     orderItemId: int("order_item_id").autoincrement().notNull().primaryKey(),
-    orderId: int("order_id").references(()=>orders.id),
-    specificItemId: int("product_id").references(()=>specificItem.id),
-    price: decimal("price", { precision: 10, scale: 2 })
+    orderId: int("order_id").references(()=>orders.id).notNull(),
+    specificItemId: int("product_id").references(()=>specificItem.id).notNull(),
+    price: decimal("price", { precision: 10, scale: 2 }).notNull()
 });
 
 export const orders = mysqlTable("orders", {
     id: int("order_id").autoincrement().notNull().primaryKey(),
     userId: int("user_id").references(()=>users.id),
-    orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
-    totalAmount: decimal("total_amount", { precision: 10, scale: 2 }),
+    addressId: int("address_id").references(()=>addresses.addressId).notNull(),
+    orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+    totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
     orderStatus: varchar('varchar', { length: 29, enum: ["Your order has been received.", 'Your order has been shipped.'] })
 	.notNull().default("Your order has been received."),
 });
 
 export const users = mysqlTable("users", {
     id: int("user_id").autoincrement().notNull().primaryKey(),
-    authId: varchar("auth_user_id", { length: 255 }),
+    authId: varchar("auth_user_id", { length: 255 }).notNull(),
     email: varchar("email", { length: 255 }),
     authName:varchar("username", {length: 255}),
 });
@@ -81,9 +82,9 @@ export const users = mysqlTable("users", {
 export const addresses = mysqlTable("addresses", {
     addressId: int("address_id").autoincrement().notNull().primaryKey(),
     userId: int("user_id").references(()=>users.id),
-    name: varchar("name", {length: 30}),
-    streetAddress: varchar("street_address", { length: 255 }),
-    city: varchar("city", { length: 50 }),
-    postCode: varchar("post_code", { length: 20 }),
-    country: varchar("country", { length: 50 }),
+    name: varchar("name", {length: 30}).notNull(),
+    streetAddress: varchar("street_address", { length: 255 }).notNull(),
+    city: varchar("city", { length: 50 }).notNull(),
+    postCode: varchar("post_code", { length: 20 }).notNull(),
+    country: varchar("country", { length: 50 }).notNull(),
 });

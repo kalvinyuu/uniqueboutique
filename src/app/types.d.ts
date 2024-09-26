@@ -70,3 +70,43 @@ export type StripeProduct = {
 }
 
 export type ColourTable = { id: number; colour: string }[];
+
+export type Orders = {
+    id: number;
+    userId: number| null;
+    addressId: number;
+    orderDate: string; 
+    totalAmount: string; 
+    orderStatus: "Your order has been received." | "Your order has been shipped.";
+}
+
+export enum OrderStat {
+    Recieved = "Your order has been received.",
+    Shipped = 'Your order has been shipped.'
+}
+
+export type OrderItems = {
+    orderItemId: number;
+    orderId: number;
+    specificItemId: number;
+    price: string;
+}[]
+
+export type Addresses = {
+    addressId: number;
+    userId: number | null;
+    name: string;
+    streetAddress: string;
+    city: string;
+    postCode: string;
+    country: string;
+}
+
+export type SpecificItem = {
+    id: number;
+    productId: number;
+    size?: string;
+    colour?: number;
+    ribbon?: number | null;
+    message?: string | null;
+}

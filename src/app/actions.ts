@@ -5,9 +5,12 @@ import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
 import { productCatalouge, images } from '@/db/schema'; 
 import { db } from "@/db/index";
+import { eq } from 'drizzle-orm';
+import { orders } from "@/db/schema"
 import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto"
+import { OrderStat } from "@/app/types"
 
 const format = z.object({
     name: z.string().min(1),
@@ -16,6 +19,11 @@ const format = z.object({
     category: z.string().min(1),
 
 })
+
+export async function updateOrderStatus(orderID: number) {
+    await db.update(orders).set({orderStatus: OrderStat.Shipped })
+	.where(eq(orders.id, orderID))
+}
 
 export async function setRole(formData: FormData) {
     // Check that the user trying to set the role is an admin

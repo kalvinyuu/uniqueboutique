@@ -2,21 +2,49 @@ import { cache } from 'react'
 import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images, users, orders, orderItems, addresses, specificItem} from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
-import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images,  } from "@/app/types" 
+import { Size, Colour, Ribbon, Product, ProductCatalouge, ColourTable, Images, Orders, Addresses, OrderItems, SpecificItem, OrderStat } from "@/app/types"
 
-export async function 
+export async function getAddresses(addressID: number): Promise<Addresses> {
+    const address = await db.query.addresses.findFirst({
+        where: eq(addresses.addressId, addressID),
+    });
 
-export async function getOrderItems(orderID:number) {
-    const item = await db.query.orderItems.findMany({
+    if (!address) {
+        throw new Error(`Address not found for ID: ${addressID}`);
+    }
+
+    return address;
+}
+
+export async function getSpecItem(productID:number):Promise<SpecificItem> {
+    const item = await db.query.specificItem.findMany({
+	where: eq(specificItem.productId, productID)
+    })	
+    if (item) {
+	throw new Error ('Failed to fetch specific item')
+    }
+    return item
+}
+
+export async function getOrderItems(orderID:number): Promise<OrderItems> {
+    const orderItem = await db.query.orderItems.findMany({
 	where: eq(orderItems.orderId, orderID)
     })
-    return item
+    if (!orderItem) {
+	throw new Error ('Failed to fetch order items')
+    }
+    return orderItem
 }
 
 
 export async function getOrders() {
-    const order = await db.select().from(orders).where(eq(orders.orderStatus, 'Your order has been received.'))
-    return order
+    try {
+        const order:Orders[] = await db.select().from(orders)
+	    .where(eq(orders.orderStatus, OrderStat.Recieved));
+        return order;
+    } catch (error) {
+        throw new Error('Failed to fetch orders.');
+    }
 }
 
 export async function authManage(email:string|null, name:string|null, authId:string ) {
@@ -90,7 +118,6 @@ export const getSizeCategory = cache(async (x: number) => {
     return {size, ribbonTable}
 });
 
- 
 export const getAllProducts = cache(async() => {
     try {
         const results: Product[] = await db.select().from(productCatalouge);

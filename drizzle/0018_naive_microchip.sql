@@ -1,0 +1,2 @@
+ALTER TABLE `orders` ADD `address_id` int;--> statement-breakpoint
+ALTER TABLE `orders` ADD CONSTRAINT `orders_address_id_addresses_address_id_fk` FOREIGN KEY (`address_id`) REFERENCES `addresses`(`address_id`) ON DELETE no action ON UPDATE no action;

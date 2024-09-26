@@ -34,10 +34,10 @@ export async function POST(req: NextRequest) {
             const username = metadata[0].userID;
 	    console.log(username)
 	    const user = await getUserID(username)
-	    
+	   
 	    console.log(user)
 	    try {
-		await db.insert(addresses).values({
+		const addressRes = await db.insert(addresses).values({
 		    streetAddress: address.line1,
 		    city: address.city,
 		    postCode: address.postal_code,
@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
 		
 		const orderRes = await db.insert(orders).values({
 		    userId: user,
+		    addressId: addressRes[0].insertId ,
 		    totalAmount: completed.amount_total
 		})
 		

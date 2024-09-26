@@ -127,6 +127,41 @@
       "when": 1719889546434,
       "tag": "0017_closed_alex_power",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1726567909924,
+      "tag": "0018_naive_microchip",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1726612864951,
+      "tag": "0019_lethal_shape",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1727283291687,
+      "tag": "0020_easy_korvac",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "5",
+      "when": 1727317556064,
+      "tag": "0021_unknown_professor_monster",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "5",
+      "when": 1727322076654,
+      "tag": "0022_clammy_the_hood",
+      "breakpoints": true
     }
   ]
 }
