@@ -6,8 +6,8 @@ import {
     SignedIn,
     SignedOut,
     SignInButton,
-    UserButton,
 } from "@clerk/nextjs";
+import Users from "@/app/components/user"
 
 export async function Navbar() {
     
@@ -27,7 +27,7 @@ export async function Navbar() {
 		    {
 
 		    }
-		    <UserButton />
+		    <Users/>
 		</SignedIn>
 		<SignedOut>
 		    {/* Signed out users get sign in button */}

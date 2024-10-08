@@ -77,13 +77,15 @@ export type Orders = {
     addressId: number;
     orderDate: string; 
     totalAmount: string; 
-    orderStatus: "Your order has been received." | "Your order has been shipped.";
+    orderStatus: OrderStat;
 }
 
-export enum OrderStat {
-    Recieved = "Your order has been received.",
-    Shipped = 'Your order has been shipped.'
-}
+const OrderStat = {
+    Received:"Your order has been received.",
+    Shipped: "Your order has been shipped."
+} as const
+
+export type OrderStat = typeof OrderStat[keyof typeof OrderStat]
 
 export type OrderItems = {
     orderItemId: number;
@@ -105,8 +107,8 @@ export type Addresses = {
 export type SpecificItem = {
     id: number;
     productId: number;
-    size?: string;
-    colour?: number;
+    size: string;
+    colour: number;
     ribbon?: number | null;
     message?: string | null;
 }

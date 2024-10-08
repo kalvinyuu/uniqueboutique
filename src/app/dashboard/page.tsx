@@ -3,7 +3,7 @@ import { checkRole } from "@/../utils/roles";
 import ProductImageForm from "./productImage"
 import Form from "./imageForm"
 import ImageBank from "./imageDisplay"
-import OrderViewer from "./order";
+import BothOrders from "./order";
 
 export default function AdminDashboard() {
     if (!checkRole("admin")) {
@@ -16,7 +16,7 @@ export default function AdminDashboard() {
 	    <ProductImageForm/>
 	    <Form/>
 	    <ImageBank/>
-	    <OrderViewer/>
+	    <BothOrders/>
 	</>
     );
 }

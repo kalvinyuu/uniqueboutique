@@ -11,9 +11,9 @@ export const productCatalouge = mysqlTable("product_catalouge", {
 
 export const specificItem = mysqlTable("specific_item", {
     id: int("id").primaryKey().notNull().autoincrement(),
-    productId: int("product_id").references(()=>productCatalouge.id),
-    size: varchar("size", { length: 100 }),
-    colour: int("colour").references(()=>colour.colourId),
+    productId: int("product_id").references(()=>productCatalouge.id).notNull(),
+    size: varchar("size", { length: 100 }).notNull(),
+    colour: int("colour").references(()=>colour.colourId).notNull(),
     ribbon: int("ribbon").references(()=>ribbon.ribbonId),
     message: varchar("message", { length: 100 }),
 });

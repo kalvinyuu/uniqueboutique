@@ -3,14 +3,13 @@ import { z } from 'zod'
 import { stripe } from '@/lib/stripe'
 import { checkRole } from "@/../utils/roles";
 import { clerkClient } from "@clerk/nextjs/server";
-import { productCatalouge, images } from '@/db/schema'; 
+import { productCatalouge, images, orders } from '@/db/schema'; 
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
-import { orders } from "@/db/schema"
 import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto"
-import { OrderStat } from "@/app/types"
+import {Orders} from "@/app/types"
 
 const format = z.object({
     name: z.string().min(1),
@@ -20,17 +19,42 @@ const format = z.object({
 
 })
 
+const Order = z.object({
+    id: z.number(),
+    userId: z.number().or(z.null()),
+    addressId: z.number(),
+    orderDate: z.string(),
+    totalAmount: z.string(),
+    orderStatus: z.literal("Your order has been received.")
+	.or(z.literal("Your order has been shipped."))
+})
+
+export async function orderStatus(orderID: number) {
+    const order = await db.select().from(orders).where(eq(orders.id, orderID))
+	const parsedOrder = Order.parse(order)
+	return parsedOrder.orderStatus
+}
+
 export async function updateOrderStatus(orderID: number) {
-    await db.update(orders).set({orderStatus: OrderStat.Shipped })
-	.where(eq(orders.id, orderID))
+    const order = await db.query.orders.findFirst({
+	where: eq(orders.id, orderID)
+    })
+    	const parsedOrder = Order.parse(order)
+    if (parsedOrder.orderStatus == "Your order has been shipped." ) {
+	await db.update(orders).set({orderStatus: "Your order has been received." })
+	    .where(eq(orders.id, orderID))
+    }
+    else {
+	await db.update(orders).set({orderStatus: "Your order has been shipped." })
+	    .where(eq(orders.id, orderID))
+    }
 }
 
 export async function setRole(formData: FormData) {
     // Check that the user trying to set the role is an admin
     if (!checkRole("admin")) {
 	return { message: "Not Authorized" };
-    }
-    
+    }  
     try {
 	const res = await clerkClient.users.updateUser(
 	    formData.get("id") as string,
@@ -44,37 +68,36 @@ export async function setRole(formData: FormData) {
     }
 }
 
-export async function createProduct( formData: FormData ) {
+export async function createProduct(formData: FormData): Promise<void> {
     const info = format.parse({
-	name: formData.get('name'),
-	price: formData.get('price'),
-	imageLocation: formData.get('imageLocation'),
-	category: formData.get('category'),
-    })
-    const price = info
+        name: formData.get('name'),
+        price: formData.get('price'),
+        imageLocation: formData.get('imageLocation'),
+        category: formData.get('category'),
+    });
     try {
-	await db.insert(productCatalouge).values({
+        await db.insert(productCatalouge).values({
             name: info.name as string,
             imageLocation: info.imageLocation as string,
             price: info.price as string,
             category: info.category as string,
-	});
-	await stripe.products.create({
-	    name: info.name as string,
-	});
-	await stripe.prices.create({
-	    currency: 'gpp',
-	    unit_amount: Number(info.price.toString().replace(/\./g, "")),
-	    product_data: {
-		name: info.name as string,
-	    },
-	})
-
-	return { message: 'Product created successfully!' };
+        });
+        await stripe.products.create({
+            name: info.name as string,
+        });
+        await stripe.prices.create({
+            currency: 'gpp',
+            unit_amount: Number(info.price.toString().replace(/\./g, "")),
+            product_data: {
+                name: info.name as string,
+            },
+        });
+        console.log('Product created successfully!');
     } catch (error) {
-	return { message: 'Error creating product' };
+        console.error('Error creating product:', error);
     }
 }
+
 
 const s3Client = new S3Client({
     region: process.env.AWS_REGION!,

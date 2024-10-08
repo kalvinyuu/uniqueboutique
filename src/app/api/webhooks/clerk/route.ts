@@ -56,11 +56,16 @@ export async function POST(req: Request) {
     const email = JSON.stringify(payload.email_address);
     const username = JSON.stringify(payload.username);
     
+    if (!id) {
+	throw new Error('ID is required for user insertion');
+    }
+
     db.insert(users).values({
 	authId: id,
-	email: email,
-	authName: username,
-    })
+	email: email ?? null, 
+	authName: username ?? null,
+    });
+    
     console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
     console.log('Webhook body:', body)
 
