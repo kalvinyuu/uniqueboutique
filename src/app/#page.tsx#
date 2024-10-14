@@ -1,0 +1,49 @@
+import ShoppingCart from '@/app/components/cart';
+import USC from "@/app/components/USC";
+import { authManage } from '@/app/utils';
+import { currentUser } from '@clerk/nextjs/server';
+import {
+    SignedIn,
+    SignedOut,
+    SignInButton,
+} from "@clerk/nextjs";
+import Users from "@/app/components/user";
+
+export async function Navbar() {
+    const user = await currentUser();
+    if (user) {
+        const id = user.id;
+        const Email = user.emailAddresses[0]?.emailAddress;
+        const name = user.username;
+
+        await authManage(Email, name, id);
+    }
+    return (
+        <nav className="sticky top-0 w-full flex items-center justify-between p-4 bg-pink-100 text-pink-600 border-b-2 border-white shadow-md dark:bg-purple-200 dark:text-gray-900 dark:border-purple-300">
+            <div className="text-lg font-bold font-dancing">Unique Boutique</div>
+            <div className="flex items-center space-x-4">
+                <SignedIn>
+                    <Users />
+                </SignedIn>
+                <SignedOut>
+                    {/* Signed out users get sign in button */}
+                    <SignInButton className="bg-pink-500 text-white py-1 px-3 rounded hover:bg-pink-600 transition duration-200 dark:bg-purple-500 dark:hover:bg-purple-600">
+                        Sign In
+                    </SignInButton>
+                </SignedOut>
+                <USC />
+                <ShoppingCart />
+            </div>
+        </nav>
+    );
+};
+import Link from "next/link";
+
+export default function Home(){
+    return (
+	<div>
+	    <h1>HOME</h1>
+	    <Link href="/shop">SHOP</Link>
+	</div>
+    )
+}

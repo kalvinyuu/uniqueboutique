@@ -7,7 +7,7 @@ export default function USC(){
     return (
 	<button 
 	    onClick={() => handleCartClick()}
-	    className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 items-center">
+	    className="px-4 py-2  rounded-md hover:bg-pink-100 items-center">
 	    <Image src="/cart.svg" width={20} height={20} alt='cart' />
 	</button>
     )

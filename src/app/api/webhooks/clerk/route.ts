@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { db } from "@/db/index";
 import { users } from '@/db/schema'; 
+import {authManage} from "@/app/utils"
 
 export async function POST(req: Request) {
     
@@ -60,11 +61,7 @@ export async function POST(req: Request) {
 	throw new Error('ID is required for user insertion');
     }
 
-    db.insert(users).values({
-	authId: id,
-	email: email ?? null, 
-	authName: username ?? null,
-    });
+    await authManage(email, username, id)
     
     console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
     console.log('Webhook body:', body)

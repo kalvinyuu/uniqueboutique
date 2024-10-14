@@ -3,13 +3,15 @@ import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, image
 import { db } from "@/db/index";
 import { eq } from 'drizzle-orm';
 import { Size, Ribbon, Product, Images, Orders, Addresses, OrderItems, SpecificItem, OrderStat } from "@/app/types";
+import {User} from "@/app/zod"
+import {z} from "zod"
 
 export async function getAddresses(addressID: number): Promise<Addresses> {
     const address = await db.query.addresses.findFirst({
         where: eq(addresses.addressId, addressID)
     });
     if (!address) {
-        throw new Error(`Address not found for ID: ${addressID}`);
+        throw new Error(`failed to fetch address`);
     }
     return address;
 }
@@ -19,7 +21,7 @@ export async function getSpecItem(productID: number): Promise<SpecificItem> {
 	where: eq(specificItem.id, productID)
     })
     if (!item) {
-	throw new Error (`Failed to fetch ID for:  ${productID}`)
+	throw new Error (`Failed to fetch product`)
     }
     return item
 }
@@ -29,7 +31,7 @@ export async function getOrderItems(orderID: number): Promise<OrderItems> {
 	where: eq(orderItems.orderId, orderID)
     })
     if (!orderItem) {
-	throw new Error ('Failed to fetch order items')
+	throw new Error ('Failed to fetch items')
     }
     return orderItem
 }
@@ -37,6 +39,15 @@ export async function getOrderItems(orderID: number): Promise<OrderItems> {
 export async function getOrders(): Promise<Orders[]> {    
     const order = await db.select().from(orders)
 	.where(eq(orders.orderStatus, "Your order has been received." ));   
+    if (!order) {
+        throw new Error('Failed to fetch orders.');
+    }
+    return order
+}
+
+export async function getCustomerOrders(ID: number): Promise<Orders[]> {    
+    const order = await db.select().from(orders)
+	.where(eq(orders.userId, ID ));
     if (!order) {
         throw new Error('Failed to fetch orders.');
     }
@@ -52,15 +63,12 @@ export async function getShippedOrders(): Promise<Orders[]> {
     return order
 }
 
-export async function authManage(email:string|null, name:string|null, authId:string ) {
-    const userId = await getUserID(authId)
-    if (userId == 0) {
+export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
 	await db.insert(users).values({
 	    email: email,
 	    authId: authId,
 	    authName: name
 	})
-    }
 }
 
 export const getProduct = cache(async (itemId: number) => {
@@ -68,17 +76,23 @@ export const getProduct = cache(async (itemId: number) => {
     where: eq(productCatalouge.id, itemId),
   });
     if (!product) {
-    throw new Error(`Product with id ${itemId} not found`);
+    throw new Error(`Product not found`);
   }
   return product;
 });
 
-export const getUserID = cache(async (username: string) => {
+export const getUserID = cache(async (ID:string, ) => {
     const user = await db.query.users.findFirst({
-        where: eq(users.authId, username),
-    });    
-    return user ? user.id : 0;
+        where: eq(users.authId, ID),
+    });
+    const parsedUser = User.parse(user)
+    
+    if (!parsedUser){
+	throw new Error('User not found');
+    }
+    return  parsedUser.id;
 });
+
 
 export const getColourTable = cache(async () => {
   const colourTable = await db.select().from(colour);

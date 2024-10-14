@@ -10,24 +10,7 @@ import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto"
 import {Orders} from "@/app/types"
-
-const format = z.object({
-    name: z.string().min(1),
-    price: z.string().min(1),
-    imageLocation: z.string().min(1),
-    category: z.string().min(1),
-
-})
-
-const Order = z.object({
-    id: z.number(),
-    userId: z.number().or(z.null()),
-    addressId: z.number(),
-    orderDate: z.string(),
-    totalAmount: z.string(),
-    orderStatus: z.literal("Your order has been received.")
-	.or(z.literal("Your order has been shipped."))
-})
+import { format, Order } from "@/app/zod"
 
 export async function orderStatus(orderID: number) {
     const order = await db.select().from(orders).where(eq(orders.id, orderID))

@@ -60,6 +60,12 @@ export type Item = {
     price: number
 }
 
+export type User = {
+    id: number,
+    authId: string,
+    email: string|null,
+    authName: string|null
+}
 export type StripeProduct = {
     id: string,
     price_id: string
@@ -76,7 +82,7 @@ export type Orders = {
     userId: number| null;
     addressId: number;
     orderDate: string; 
-    totalAmount: string; 
+    totalAmount: number; 
     orderStatus: OrderStat;
 }
 
@@ -91,7 +97,7 @@ export type OrderItems = {
     orderItemId: number;
     orderId: number;
     specificItemId: number;
-    price: string;
+    price: number;
 }[]
 
 export type Addresses = {

@@ -1,60 +1,43 @@
+import { getCustomerOrders, getUserID } from "@/app/utils";
+import { currentUser } from '@clerk/nextjs/server';
+import { z } from 'zod';
 import { getOrders, getShippedOrders, getAddresses, getSpecItem, getOrderItems } from "@/app/utils";
-import { UpdateOrderStat, UpdateShippedOrderStat }from "@/app/dashboard/updateOrderStatus"
-import { centsToDollars } from "@/app/zod"
+import { Orders, OrderItems, Addresses, SpecificItem } from "@/app/types";
 
-export default function BothOrders(){
+export default async function orderHistory() {
+    const user = await currentUser();
+    if(user) {
+	const numberPromise = z.promise(z.number());
+	const works = await numberPromise.parse(Promise.resolve(getUserID(user.id)));	
+	const orders = await getCustomerOrders(works)
+    
     return (
-	<>
-	    <ShippedOrders/>
-	    <OrderViewer/>
-	</>
-    )
-}
-
-async function ShippedOrders() {
-    const orders = await getShippedOrders();
-    return (
-        <div className="grid justify-center">
-            {orders.map((order) => (
+	<div className="grid justify-center">
+            {orders.map((order: Orders) => (
                 <div key={order.id} className="justify-center products-center mx-4 my-2">
                     <div> Order ID: {order.id} </div>
-                    <div> User ID: {order.userId} </div>
-                    <div> Address ID: {order.addressId} </div>
                     <div> Order Date: {order.orderDate} </div>
-		    <div> Total Amount: {centsToDollars(order.totalAmount)} </div>
-		    <UpdateShippedOrderStat ID={order.id} />
-		    <OrderItemsViewer orderID={order.id} />
-		    <AddressViewer addressID={order.addressId} />
-                </div>		
-            ))}
-        </div>
-    );
-}
-
-async function OrderViewer() {
-    const orders = await getOrders();
-    return (
-        <div className="grid justify-center">
-            {orders.map((order) => (
-                <div key={order.id} className="justify-center products-center mx-4 my-2">
-                    <div> Order ID: {order.id} </div>
-                    <div> User ID: {order.userId} </div>
-                    <div> Address ID: {order.addressId} </div>
-                    <div> Order Date: {order.orderDate} </div>
-		    <div> Total Amount: {centsToDollars(order.totalAmount)} </div>
-		    <UpdateOrderStat ID={order.id} />
+                    <div> Total Amount: {order.totalAmount} </div>
 		    <OrderItemsViewer orderID={order.id} />
 		    <AddressViewer addressID={order.addressId} />
                 </div>
 		
             ))}
         </div>
-    );
+    )}
+
+    else return (
+	<div>
+	    <h1>Please login to see your order history on this account!</h1>
+	</div>
+    )
+	
 }
+
 
 export async function SpecificItem({ ID }: { ID: number }) {
     try {
-        const item = await getSpecItem(ID);
+        const item: SpecificItem = await getSpecItem(ID);
         return (
             <div>
                 <div>Size: {item.size}</div>
@@ -70,7 +53,7 @@ export async function SpecificItem({ ID }: { ID: number }) {
 
 export async function AddressViewer({ addressID }: { addressID: number }) {
     try {
-        const address = await getAddresses(addressID);
+        const address: Addresses = await getAddresses(addressID);
 
         return (
             <div className="">
@@ -89,7 +72,7 @@ export async function AddressViewer({ addressID }: { addressID: number }) {
 
 export async function OrderItemsViewer({ orderID }: { orderID: number }) {
     try {
-        const orderItems = await getOrderItems(orderID);
+        const orderItems: OrderItems = await getOrderItems(orderID);
         return (
             <div>
                 {orderItems.map((item) => (
@@ -104,6 +87,5 @@ export async function OrderItemsViewer({ orderID }: { orderID: number }) {
         return <div>{(error as Error).message}</div>;
     }
 }
-
 
 

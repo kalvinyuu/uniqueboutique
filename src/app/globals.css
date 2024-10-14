@@ -3,25 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0; /* Black for light mode */
+  --background-rgb: 255, 255, 255; /* White background for light mode */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 255; /* White text for dark mode */
+    --background-rgb: 18, 18, 18; /* Dark background for dark mode */
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: rgb(var(--foreground-rgb)); /* Dynamic text color */
+  background-color: rgb(var(--background-rgb)); /* Solid background color */
+}
+
+.mad-line {
+    background-image: conic-gradient(
+        from 36deg at 20% 80%, 
+        rgba(247, 168, 208, 0.5) 0%, 
+        black 25%, 
+        rgba(188, 152, 236, 0.5) 30%
+    );
+    background-color: transparent; /* Fallback background color */
+}
+.mad-line-navbar {
+    background-image: conic-gradient(
+	from 36deg at 20% 80%,
+	#e5d5f6 0%,
+	rgba(188, 152, 236, 0.5) 55%);
+    background-color: transparent;
 }

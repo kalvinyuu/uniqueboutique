@@ -22,7 +22,7 @@ export default function Users() {
 		    <UserButton.Link
 			label="View Order history"
 			labelIcon={<OrderHistory />}
-			href="/create-organization"
+			href="/orders"
 		    />
 		    <UserButton.Action label="manageAccount" />
 		</UserButton.MenuItems>
