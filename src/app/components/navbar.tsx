@@ -1,4 +1,3 @@
-import ShoppingCart from '@/app/components/cart';
 import USC from "@/app/components/USC";
 import { authManage } from '@/app/utils';
 import { currentUser } from '@clerk/nextjs/server';
@@ -16,7 +15,7 @@ export async function Navbar() {
 
         await authManage(Email, name, id);
     }
-
+    
     return (
         <nav className="mad-line-navbar top-0 w-full flex items-center justify-between p-4 bg-pink-100 text-pink-600 border-b-2 border-white shadow-md dark:bg-purple-200 dark:text-pink-500 dark:border-purple-300 bg-fixed">
             <div className="flex items-center space-x-4">
@@ -51,7 +50,6 @@ export async function Navbar() {
                     </SignInButton>
                 </SignedOut>
                 <USC />
-                <ShoppingCart />
             </div>
         </nav>
     );

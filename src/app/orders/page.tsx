@@ -41,7 +41,7 @@ export default async function orderHistory() {
 
 
 
-export async function SpecificItem({ ID }: { ID: number }) {
+async function SpecificItem({ ID }: { ID: number }) {
     try {
         const item = await getSpecItem(ID);
         return (
@@ -57,7 +57,7 @@ export async function SpecificItem({ ID }: { ID: number }) {
     }
 }
 
-export async function AddressViewer({ addressID }: { addressID: number }) {
+async function AddressViewer({ addressID }: { addressID: number }) {
     try {
         const address = await getAddresses(addressID);
 
@@ -76,7 +76,7 @@ export async function AddressViewer({ addressID }: { addressID: number }) {
     }
 }
 
-export async function OrderItemsViewer({ orderID }: { orderID: number }) {
+async function OrderItemsViewer({ orderID }: { orderID: number }) {
     try {
         const orderItems = await getOrderItems(orderID);
         return (

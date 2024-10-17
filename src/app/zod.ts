@@ -25,6 +25,7 @@ export const User = z.object({
     authName: z.string().or(z.null()),
 })
 
-export function centsToDollars(cents:number) {
-    return (cents / 100).toFixed(2); // Converts cents to dollars and formats to two decimal places
+export function centsToDollars(cents:string) {
+    const pounds = Number(cents);
+    return (pounds / 100).toFixed(2);
 }

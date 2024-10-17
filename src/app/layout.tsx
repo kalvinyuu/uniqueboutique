@@ -28,8 +28,6 @@ export default function RootLayout({
             <main className="">
               {children}
             </main>
-
-            {/* Footer */}
             <footer className="bg-pink-100 py-6 text-center border-t-2 border-white dark:bg-purple-200">
               <p className="text-pink-600 dark:text-gray-900">Made with love at Unique Boutique</p>
               <p>

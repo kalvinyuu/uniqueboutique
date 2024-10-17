@@ -29,27 +29,27 @@ export type Ribbon = {
 }[]
 
 export type CartItem = {
-    id: number;
-    name: string;
-    image_location: string;
-    price: string;
-    category: string;
-    size: string;
-    size_id: number;
-    colour: string;
-    colour_id: number;
-    ribbon: string | null ;
-    ribbon_id: number | null;
+    id: number,
+    name: string,
+    image_location: string,
+    price: number,
+    category: string,
+    size: string,
+    size_id: number,
+    colour: string,
+    colour_id: number,
+    ribbon: string | null,
+    ribbon_id: number | null,
 }
 
 export type Cart = CartItem[];
 
 export type ProductCatalouge = {
-  id: number;
-  name: string;
-  imageLocation: string;
-  price: string
-  category: string;
+    id: number,
+    name: string,
+    imageLocation: string,
+    price: string,
+    category: string,
 }
 
 export type Item = {
@@ -82,7 +82,7 @@ export type Orders = {
     userId: number| null;
     addressId: number;
     orderDate: string; 
-    totalAmount: number; 
+    totalAmount: string; 
     orderStatus: OrderStat;
 }
 
@@ -97,7 +97,7 @@ export type OrderItems = {
     orderItemId: number;
     orderId: number;
     specificItemId: number;
-    price: number;
+    price: string;
 }[]
 
 export type Addresses = {
