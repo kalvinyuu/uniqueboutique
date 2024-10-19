@@ -34,4 +34,5 @@ body {
 	#e5d5f6 0%,
 	rgba(188, 152, 236, 0.5) 55%);
     background-color: transparent;
+    transition: transform 150ms ease-in-out;
 }

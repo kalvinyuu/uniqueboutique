@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { updateOrderStatus, orderStatus } from "@/app/actions";
-import { OrderStat } from "@/app/types";
+import { useState } from 'react';
+import { updateOrderStatus } from "@/app/actions";
 
 export function UpdateOrderStat({ ID }: { ID: number }) {
     const [status, setStatus] = useState<"Received." | "Shipped.">('Received.');

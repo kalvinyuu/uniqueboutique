@@ -63,13 +63,7 @@ export async function getShippedOrders(): Promise<Orders[]> {
     return order
 }
 
-export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
-	await db.insert(users).values({
-	    email: email,
-	    authId: authId,
-	    authName: name
-	})
-}
+
 
 export const getProduct = cache(async (itemId: number) => {
   const product = await db.query.productCatalouge.findFirst({
