@@ -1,11 +1,10 @@
 import { useShoppingCart } from 'use-shopping-cart'
 import CartItem from './CartItem'
 import CheckoutButton from './checkoutButton'
-import { Item } from "@/app/types" 
 
 export default function ShoppingCart({ onClose }:any) {
-    const { shouldDisplayCart, cartCount, cartDetails } = useShoppingCart();
-  
+    const { cartCount, cartDetails,  } = useShoppingCart();
+    console.log(cartDetails)
   return (
     <div
       className='bg-white text-black flex flex-col absolute right-3 md:right-9 top-14 w-80 py-4
@@ -13,8 +12,9 @@ export default function ShoppingCart({ onClose }:any) {
       
       {cartCount && cartCount > 0 ? (
         <> 
-          {Object.values(cartDetails ?? {}).map((entry) => (
-            <CartItem key={entry.id} item={entry as Item} />
+            {Object.values(cartDetails ?? {}).map((entry) => (
+		
+            <CartItem key={entry.id} item={entry} />
           ))}
           <CheckoutButton />
         </>
@@ -28,4 +28,3 @@ export default function ShoppingCart({ onClose }:any) {
     </div>
   );
 }
-

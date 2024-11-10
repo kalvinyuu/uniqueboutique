@@ -30,7 +30,6 @@ export async function POST(request: Request) {
     const line_items = validateCartItems(inventory, cartProducts)
     console.log(cartProducts)
     const allProductData = Object.values(cartProducts).map(item => item.product_data);
-
     const checkoutSession = await stripe.checkout.sessions.create({
 	shipping_address_collection:{
             allowed_countries:["GB"]

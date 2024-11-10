@@ -6,6 +6,15 @@ import { Size, Ribbon, Product, Images, Orders, Addresses, OrderItems, SpecificI
 import {User} from "@/app/zod"
 import {z} from "zod"
 
+export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
+	await db.insert(users).values({
+	    email: email,
+	    authId: authId,
+	    authName: name
+	})
+}
+
+
 export async function getAddresses(addressID: number): Promise<Addresses> {
     const address = await db.query.addresses.findFirst({
         where: eq(addresses.addressId, addressID)

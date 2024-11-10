@@ -12,7 +12,6 @@ import crypto from "crypto"
 import {Orders} from "@/app/types"
 import { format, Order } from "@/app/zod"
 
-
 export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
 	await db.insert(users).values({
 	    email: email,
@@ -20,6 +19,8 @@ export async function authManage(email:string|null=null, name:string|null=null, 
 	    authName: name
 	})
 }
+
+
 
 export async function orderStatus(orderID: number) {
     const order = await db.select().from(orders).where(eq(orders.id, orderID))

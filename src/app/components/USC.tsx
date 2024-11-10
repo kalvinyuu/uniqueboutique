@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 
 export default function USC() {
-  const { handleCartClick } = useShoppingCart();
+  const { handleCartClick, cartCount } = useShoppingCart(); // Get cartCount
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef<HTMLDivElement>(null);
 
@@ -42,26 +42,32 @@ export default function USC() {
   }, [showCart]);
 
   return (
-    <div>
+    <div className="relative">
       <button
         onClick={() => {
           handleCartClick();
           setShowCart(true);
         }}
-        className="rounded-md hover:bg-pink-100"
+        className="rounded-md hover:bg-pink-100 relative"
       >
         <Image src="/cart.svg" width={30} height={30} alt="cart" />
+        {cartCount ? ( 
+          <span className="absolute -top-2 -right-2 bg-blue-400 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            {cartCount}
+          </span>
+        ) : null}
       </button>
 
-      {showCart && createPortal(
-        <div
-          ref={cartRef} // Attach the ref to the cart container
-          className="fixed top-10 right-10 w-80 h-auto bg-white shadow-lg z-50 rounded-lg"
-        >
-          <ShoppingCart onClose={() => setShowCart(false)} />
-        </div>,
-        document.body
-      )}
+      {showCart &&
+        createPortal(
+          <div
+            ref={cartRef} // Attach the ref to the cart container
+            className="fixed top-10 right-10 w-80 h-auto bg-white shadow-lg z-50 rounded-lg"
+          >
+            <ShoppingCart onClose={() => setShowCart(false)} />
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

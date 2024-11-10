@@ -22,7 +22,10 @@ export default function ItemForm({
   const [message, setMessage] = useState<string>("");
   const [productMetadata, setProductMetadata] = useState<
     Array<{ size: string; msg: string; productId: number; colour: number; ribbon: number }>
-  >([]);
+    >([]);
+
+    
+    
   const [showSizeWarning, setShowSizeWarning] = useState<boolean>(false);
   const [showColourWarning, setShowColourWarning] = useState<boolean>(false);
   const [cartSuccess, setCartSuccess] = useState<boolean>(false); // Success state
@@ -66,14 +69,15 @@ export default function ItemForm({
     price: product.price,
   };
 
-  setProductMetadata((prevMetadata) => [...prevMetadata, newMetadata]);
-
-  if (stripeProduct) {
-    addItem(stripeProduct, {
-      count: 1,
-      product_metadata: { data: [...productMetadata, newMetadata], userID: user?.id },
+     
+     setProductMetadata((prevMetadata) => [...prevMetadata, newMetadata]);
+     
+     if (stripeProduct) {
+	 addItem(stripeProduct, {
+	     product_metadata: { data: [...productMetadata, newMetadata], userID: user?.id },
+	     count: 1
     });
-
+	 
     // Set button text and success state
     setCartSuccess(true);
     setButtonText("Product Added!");
