@@ -14,17 +14,16 @@ export default async function Page({ params }: { params: { item: number } }) {
 		    
 		<p className ="text-xl">{product.name}</p>
                     <Image
-                        src={`/images/productCatalouge/${product.imageLocation}`}
+                        src={`${product.imageLocation}`}
                         width={500}
                         height={500}
                         alt="Picture of the author"
-			loading="lazy"
                     />
                     <p>{product.price}</p> 
 		    <ItemForm product={product}
-			      size={size}
+		    	      sizeTable={size}
 			      ribbonTable={ribbonTable}
-			      colourTable={colourTable} /> 
+			      colourTable={colourTable}/> 
                 </div>
             ) : (
                 <p>No product found</p>

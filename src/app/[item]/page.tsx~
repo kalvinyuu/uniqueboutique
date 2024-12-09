@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import ItemForm from '@/app/shop/[item]/itemForm'
+import ItemForm from '@/app/[item]/itemForm'
 import { getProduct, getColourTable, getSizeCategory } from "@/app/utils"
 
 export default async function Page({ params }: { params: { item: number } }) {
@@ -18,11 +18,10 @@ export default async function Page({ params }: { params: { item: number } }) {
                         width={500}
                         height={500}
                         alt="Picture of the author"
-			loading="lazy"
                     />
                     <p>{product.price}</p> 
 		    <ItemForm product={product}
-		    	      size={size}
+		    	      sizeTable={size}
 			      ribbonTable={ribbonTable}
 			      colourTable={colourTable}/> 
                 </div>

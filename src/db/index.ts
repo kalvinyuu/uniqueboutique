@@ -1,14 +1,12 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/libsql/";
+import { createClient } from "@libsql/client/web";
 import * as schema from './schema';
-import mysql from "mysql2/promise";
-import fs from 'fs';
 
-const connection = mysql.createPool({
-    host: process.env.HOST,
-    port: 54737,
-    user: process.env.USERNAME,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
+const turso = createClient({
+  url: process.env.TURSO_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN!,
 });
 
-export const db = drizzle(connection, { schema, mode: 'default' });
+
+
+export const db = drizzle(turso, { schema });

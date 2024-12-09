@@ -1,19 +1,24 @@
-import { cache } from 'react';
 import { productCatalouge, colour, ribbon, mensSize, womansSize, kidsSize, images, users, orders, orderItems, addresses, specificItem} from '@/db/schema'; 
-import { db } from "@/db/index";
+import  { db }  from "@/db/index";
 import { eq } from 'drizzle-orm';
 import { Size, Ribbon, Product, Images, Orders, Addresses, OrderItems, SpecificItem, OrderStat } from "@/app/types";
 import {User} from "@/app/zod"
 import {z} from "zod"
 
-export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
-	await db.insert(users).values({
-	    email: email,
-	    authId: authId,
-	    authName: name
-	})
-}
+export async function authManage(email: string | null = null, name: string | null = null, authId: string) {
 
+    const existingUser = await db.select().from(users)
+        .where(eq(users.authId, authId))
+        .limit(1);
+
+    if (existingUser.length === 0) {
+        await db.insert(users).values({
+            email: email,
+            authId: authId,
+             authName: name
+        });
+    }
+}
 
 export async function getAddresses(addressID: number): Promise<Addresses> {
     const address = await db.query.addresses.findFirst({
@@ -73,71 +78,67 @@ export async function getShippedOrders(): Promise<Orders[]> {
 }
 
 
-
-export const getProduct = cache(async (itemId: number) => {
-  const product = await db.query.productCatalouge.findFirst({
-    where: eq(productCatalouge.id, itemId),
-  });
+export async function getProduct(itemId: number) {
+    const product = await db.query.productCatalouge.findFirst({
+        where: eq(productCatalouge.id, itemId),
+    });
     if (!product) {
-    throw new Error(`Product not found`);
-  }
-  return product;
-});
+        throw new Error(`Product not found`);
+    }
+    return product;
+}
 
-export const getUserID = cache(async (ID:string, ) => {
+export async function getUserID(ID: string) {
     const user = await db.query.users.findFirst({
         where: eq(users.authId, ID),
     });
-    const parsedUser = User.parse(user)
-    
-    if (!parsedUser){
-	throw new Error('User not found');
+    const parsedUser = User.parse(user);
+    if (!parsedUser) {
+        throw new Error('User not found');
     }
-    return  parsedUser.id;
-});
+    return parsedUser.id;
+}
 
+export async function getColourTable() {
+    const colourTable = await db.select().from(colour);
+    return colourTable;
+}
 
-export const getColourTable = cache(async () => {
-  const colourTable = await db.select().from(colour);
-  return colourTable;
-});
-
-export const getImages = cache(async () => {
+export async function getImages(): Promise<Images[]> {
     const image: Images[] = await db.select().from(images);
-  return image;
-});
-
-export const getImage = cache(async (imageId: number) => {
-    const image = await db.query.images.findFirst({
-	where: eq(images.imageId, imageId ),
-    });
-        if (!image) {
-    throw new Error(`image with id ${imageId} not found`);
-  }
     return image;
-});
+}
 
-export const getSizeCategory = cache(async (x: number) => {
-    let size: Size = [{sizeId: 1,
-		       size:"M"}]
-    let ribbonTable: Ribbon = []   
-    const product: Product = await getProduct(x)	
+export async function getImage(imageId: number) {
+    const image = await db.query.images.findFirst({
+        where: eq(images.imageId, imageId),
+    });
+    if (!image) {
+        throw new Error(`Image with id ${imageId} not found`);
+    }
+    return image;
+}
+
+export async function getSizeCategory(x: number) {
+    let size: Size = [{ sizeId: 1, size: "M" }];
+    let ribbonTable: Ribbon = [];
+    const product: Product = await getProduct(x);
     switch (product?.category) {
-	case "mens":
+        case "mens":
             size = await db.select().from(mensSize);
             break;
-	case "womans":
-	case "kids":
+        case "womans":
+        case "kids":
             size = await db.select().from(product?.category === "womans" ? womansSize : kidsSize);
             ribbonTable = await db.select().from(ribbon);
             break;
-	default:
+        default:
             break;
     }
-    return {size, ribbonTable}
-});
+    return { size, ribbonTable };
+}
 
-export const getAllProducts = cache(async() => {
+export async function getAllProducts(): Promise<Product[]> {
     try {
         const results: Product[] = await db.select().from(productCatalouge);
         return results;
@@ -145,4 +146,4 @@ export const getAllProducts = cache(async() => {
         console.error('Error fetching products:', error);
         throw new Error('Failed to fetch data');
     }
-})
+}

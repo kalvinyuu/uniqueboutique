@@ -6,8 +6,7 @@ import { Item } from '@/app/types';
 export default function CartItem({ item }: { item: any }) {
   const { name, image, quantity, price, id } = item;
   const { removeItem } = useShoppingCart();
-    const metaDataArray = item.product_data.data;
-    console.log(metaDataArray)
+    const metaDataArray = Object.values(item.product_data.data);
   const removeItemFromCart = () => {
     removeItem(id);
   };

@@ -15,12 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="overflow-x-hidden bg-pink-100 font-sans  p-8 mx-auto max-w-7xl space-y-8">
         <ClerkProvider>
           <CartProvider>

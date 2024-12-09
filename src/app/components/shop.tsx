@@ -2,27 +2,16 @@ import {getAllProducts} from '@/app/utils'
 import Image from 'next/image'
 import Link from "next/link";
 
-export default function Home() {
-  return (
-      <div className="overflow-hidden">
-	  <div>
-	      {/* Other content of your app */}
-	  </div>
-	  <Products/>
-      </div>
-  )
-}
-
-async function Products() {
+export default async function Products() {
     try{
 	const products = await getAllProducts();
 	return (
-	    <div className="grid justify-center">
+	    <div className="overflow-hidden grid justify-center">
 	    {products.map(product => (
 		<div key={product.id} className="justify-center products-center mx-4 my-2">
-		    <Link href={`/shop/${product.id}`}> 
+		    <Link href={`/${product.id}`}> 
 			<Image
-			src={`/images/productCatalouge/${product.imageLocation}`}
+			src={`${product.imageLocation}`}
 			width={300}
 			height={400}
 			alt="Picture of the author"

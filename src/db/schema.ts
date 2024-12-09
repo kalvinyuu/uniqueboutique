@@ -1,90 +1,91 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, decimal, timestamp, text } from "drizzle-orm/mysql-core"
-import { sql, relations } from "drizzle-orm"
+import { sqliteTable, integer, text, real } from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
 
-export const productCatalouge = mysqlTable("product_catalouge", {
-    id: int("id").autoincrement().notNull().primaryKey(),
-    name: varchar("name", { length: 100 }).notNull(),
-    imageLocation: varchar("image_location", { length: 100 }).notNull(),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    category: varchar("category", { length: 100 }).notNull(),
+export const productCatalouge = sqliteTable("product_catalouge", {
+    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
+    name: text("name").notNull(),
+    imageLocation: text("image_location").notNull(),
+    price: real("price").notNull(), // Changed from numeric to real
+    category: text("category").notNull(),
 });
 
-export const specificItem = mysqlTable("specific_item", {
-    id: int("id").primaryKey().notNull().autoincrement(),
-    productId: int("product_id").references(()=>productCatalouge.id).notNull(),
-    size: varchar("size", { length: 100 }).notNull(),
-    colour: int("colour").references(()=>colour.colourId).notNull(),
-    ribbon: int("ribbon").references(()=>ribbon.ribbonId),
-    message: varchar("message", { length: 100 }),
+export const specificItem = sqliteTable("specific_item", {
+    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
+    productId: integer("product_id").references(() => productCatalouge.id).notNull(),
+    size: text("size").notNull(),
+    colour: integer("colour").references(() => colour.colourId).notNull(),
+    ribbon: integer("ribbon").references(() => ribbon.ribbonId),
+    message: text("message"),
 });
 
-export const product_images = mysqlTable("product_images", {
-    productId: int("product_id").references(()=> productCatalouge.id),
-    imageId: int("image_id").references(() => images.imageId)
+export const productImages = sqliteTable("product_images", {
+    productId: integer("product_id").references(() => productCatalouge.id),
+    imageId: integer("image_id").references(() => images.imageId),
 });
 
-export const images = mysqlTable("images", {
-    imageId: int("image_id").autoincrement().notNull().primaryKey(),
+export const images = sqliteTable("images", {
+    imageId: integer("image_id").primaryKey({ autoIncrement: true }).notNull(),
     url: text("url").notNull(),
-    width: int("width").notNull(),
-    height: int("height").notNull(),
+    width: integer("width").notNull(),
+    height: integer("height").notNull(),
 });
 
-export const colour = mysqlTable("colour", {
-    colourId: int("colour_id").autoincrement().notNull().primaryKey(),
-    colour: varchar("colour", { length: 100 }).notNull(),
+export const colour = sqliteTable("colour", {
+    colourId: integer("colour_id").primaryKey({ autoIncrement: true }).notNull(),
+    colour: text("colour").notNull(),
 });
 
-export const ribbon = mysqlTable("ribbon", {
-    ribbonId: int("ribbon_id").autoincrement().notNull().primaryKey(),
-    ribbon: varchar("ribbon", { length: 100 }).notNull(),
+export const ribbon = sqliteTable("ribbon", {
+    ribbonId: integer("ribbon_id").primaryKey({ autoIncrement: true }).notNull(),
+    ribbon: text("ribbon").notNull(),
 });
 
-export const kidsSize = mysqlTable("kids_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    sizeId: int("size_id").autoincrement().notNull().primaryKey(),
+export const kidsSize = sqliteTable("kids_size", {
+    size: text("size").notNull(),
+    sizeId: integer("size_id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
-export const mensSize = mysqlTable("mens_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    sizeId: int("size_id").autoincrement().notNull().primaryKey(),
+export const mensSize = sqliteTable("mens_size", {
+    size: text("size").notNull(),
+    sizeId: integer("size_id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
-export const womansSize = mysqlTable("womans_size", {
-    size: varchar("size", { length: 100 }).notNull(),
-    sizeId: int("size_id").autoincrement().notNull().primaryKey(),
+export const womansSize = sqliteTable("womans_size", {
+    size: text("size").notNull(),
+    sizeId: integer("size_id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
-export const orderItems = mysqlTable("order_items", {
-    orderItemId: int("order_item_id").autoincrement().notNull().primaryKey(),
-    orderId: int("order_id").references(()=>orders.id).notNull(),
-    specificItemId: int("product_id").references(()=>specificItem.id).notNull(),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull()
+export const orderItems = sqliteTable("order_items", {
+    orderItemId: integer("order_item_id").primaryKey({ autoIncrement: true }).notNull(),
+    orderId: integer("order_id").references(() => orders.id).notNull(),
+    specificItemId: integer("product_id").references(() => specificItem.id).notNull(),
+    price: real("price").notNull(), // Changed from numeric to real
 });
 
-export const orders = mysqlTable("orders", {
-    id: int("order_id").autoincrement().notNull().primaryKey(),
-    userId: int("user_id").references(()=>users.id),
-    addressId: int("address_id").references(()=>addresses.addressId).notNull(),
-    orderDate: timestamp("order_date", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
-    totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
-    orderStatus: varchar('varchar', { length: 29, enum: ["Your order has been received.", 'Your order has been shipped.'] })
-	.notNull().default("Your order has been received."),
+export const orders = sqliteTable("orders", {
+    id: integer("order_id").primaryKey({ autoIncrement: true }).notNull(),
+    userId: integer("user_id").references(() => users.id),
+    addressId: integer("address_id").references(() => addresses.addressId).notNull(),
+    orderDate: text("order_date").default(sql`CURRENT_TIMESTAMP`).notNull(), // Using text for timestamps
+    totalAmount: real("total_amount").notNull(), // Changed from numeric to real
+    orderStatus: text("order_status")
+        .default("Your order has been received.")
+        .notNull()
 });
 
-export const users = mysqlTable("users", {
-    id: int("user_id").autoincrement().notNull().primaryKey(),
-    authId: varchar("auth_user_id", { length: 255 }).notNull(),
-    email: varchar("email", { length: 255 }),
-    authName:varchar("username", {length: 255}),
+export const users = sqliteTable("users", {
+    id: integer("user_id").primaryKey({ autoIncrement: true }).notNull(),
+    authId: text("auth_user_id").notNull(),
+    email: text("email"),
+    authName: text("username"),
 });
 
-export const addresses = mysqlTable("addresses", {
-    addressId: int("address_id").autoincrement().notNull().primaryKey(),
-    userId: int("user_id").references(()=>users.id),
-    name: varchar("name", {length: 30}).notNull(),
-    streetAddress: varchar("street_address", { length: 255 }).notNull(),
-    city: varchar("city", { length: 50 }).notNull(),
-    postCode: varchar("post_code", { length: 20 }).notNull(),
-    country: varchar("country", { length: 50 }).notNull(),
+export const addresses = sqliteTable("addresses", {
+    addressId: integer("address_id").primaryKey({ autoIncrement: true }).notNull(),
+    userId: integer("user_id").references(() => users.id),
+    name: text("name").notNull(),
+    streetAddress: text("street_address").notNull(),
+    city: text("city").notNull(),
+    postCode: text("post_code").notNull(),
+    country: text("country").notNull(),
 });
