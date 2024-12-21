@@ -1,0 +1,7 @@
+(undo-tree-save-format-version . 1)
+"6270b974268dc18ec0473d5e25b652278f3eceb6"
+[nil nil nil nil (26464 35365 60442 0) 0 nil]
+([nil nil ((#("\"use client\"" 0 1 (font-lock-face web-mode-javascript-string-face syntax-table (15) part-token string part-side jsx) 1 12 (font-lock-face web-mode-javascript-string-face part-token string part-side jsx)) . 1) (undo-tree-id1 . -12) (undo-tree-id2 . -12) (undo-tree-id3 . -12) (t 26385 3786 135240 791000)) nil (26464 35365 60441 0) 0 nil])
+([nil current ((#("
+" 0 1 (part-side jsx)) . -1) (undo-tree-id0 . -1) 2) nil (26464 35365 60436 0) 0 nil])
+nil

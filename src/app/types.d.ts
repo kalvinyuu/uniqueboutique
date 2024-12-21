@@ -2,7 +2,7 @@ export type Product = {
     id: number,
     name: string,
     imageLocation: string,
-    price: string,
+    price: number,
     category: string
 }
 
@@ -82,8 +82,8 @@ export type Orders = {
     userId: number| null;
     addressId: number;
     orderDate: string; 
-    totalAmount: string; 
-    orderStatus: OrderStat;
+    totalAmount: number; 
+    orderStatus: string;
 }
 
 const OrderStat = {

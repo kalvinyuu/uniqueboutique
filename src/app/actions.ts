@@ -61,28 +61,28 @@ export async function setRole(formData: FormData) {
     }
 }
 
-export async function createProduct(formData: FormData): Promise<void> {
+export async function createProduct(formData: FormData) {
     const info = format.parse({
         name: formData.get('name'),
-        price: formData.get('price'),
+        price: formData.get("price"),
         imageLocation: formData.get('imageLocation'),
         category: formData.get('category'),
     });
     try {
         await db.insert(productCatalouge).values({
-            name: info.name as string,
-            imageLocation: info.imageLocation as string,
-            price: info.price as string,
-            category: info.category as string,
+            name: info.name,
+            imageLocation: info.imageLocation ,
+            price: info.price,
+            category: info.category ,
         });
         await stripe.products.create({
-            name: info.name as string,
+            name: info.name,
         });
         await stripe.prices.create({
             currency: 'gpp',
-            unit_amount: Number(info.price.toString().replace(/\./g, "")),
+            unit_amount: Math.round(info.price * 100),
             product_data: {
-                name: info.name as string,
+                name: info.name,
             },
         });
         console.log('Product created successfully!');

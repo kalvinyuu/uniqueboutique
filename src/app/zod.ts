@@ -1,11 +1,10 @@
 import { z } from "zod"
 
 export const format = z.object({
-    name: z.string().min(1),
-    price: z.string().min(1),
-    imageLocation: z.string().min(1),
-    category: z.string().min(1),
-
+    name: z.string().min(1, "Name is required"),
+    price: z.coerce.number().positive("Price must be positive"),
+    imageLocation: z.string().url("Invalid image URL"),
+    category: z.enum(['mens', 'womens', 'kids'] )
 })
 
 export const Order = z.object({
@@ -25,7 +24,14 @@ export const User = z.object({
     authName: z.string().or(z.null()),
 })
 
-export function centsToDollars(cents:string) {
-    const pounds = Number(cents);
+export const insertResultSchema = z.array(
+  z.object({
+    insertId: z.number(),
+  })
+);
+
+
+export function centsToDollars(cents:number) {
+    const pounds = cents;
     return (pounds / 100).toFixed(2);
 }

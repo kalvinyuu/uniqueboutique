@@ -1,9 +1,8 @@
 import Stripe from "stripe";
+import {insertResultSchema} from"@/app/zod"
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
-import { eq } from 'drizzle-orm';
 import { addresses, specificItem, orders, orderItems } from "@/db/schema";
-import {Addresses } from "@/app/types"
 import { getUserID } from '@/app/utils';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -36,38 +35,27 @@ export async function POST(req: NextRequest) {
             const username = metadata[0].userID;
 	    console.log(username)
 	    const user = await getUserID(username)
-	    
 	    console.log(user)
 	    try {
-		const ADDRESS = await db.query.addresses.findFirst({
-		    where: ((addresses, { eq, and }) => and(eq(addresses.streetAddress, address.line1),
-							    eq(addresses.name, completed.shipping_details.name),
-							    eq(addresses.postCode, address.postal_code)
-							   ))
+		const addressRes = await db.insert(addresses).values({
+		    name: completed.shipping_details.name,
+		    streetAddress: address.line1,
+		    city: address.city,
+		    postCode: address.postal_code,
+		    country: address.country , 
+		    userId: user || null,
 		});
-		if(ADDRESS===undefined) {
-                    const addressRes = await db.insert(addresses).values({
-			name: completed.shipping_details.name,
-			streetAddress: address.line1,
-			city: address.city,
-			postCode: address.postal_code,
-			country: address.country , 
-			userId: user || null,
-                    });
-		    
-		    var orderRes = await db.insert(orders).values({
-			userId: user,
-			addressId: addressRes[0].insertId ,
-			totalAmount: completed.amount_total
-		    })
-		}
-		else {
-		    var orderRes = await db.insert(orders).values({
-			userId: user,
-			addressId: ADDRESS.addressId ,
-			totalAmount: completed.amount_total
-		    }) 
-		}
+
+
+		const parsedAddressRes = insertResultSchema.parse(addressRes);
+		const addressId = parsedAddressRes[0].insertId;
+		
+		const orderRes = await db.insert(orders).values({
+		    userId: user,
+		    addressId,
+		    totalAmount: completed.amount_total
+		})
+		
 		for (const item of data) {
 		    console.log(item)
 		    const specRes = await db.insert(specificItem).values({
@@ -77,10 +65,16 @@ export async function POST(req: NextRequest) {
 			message: item.message,
 			ribbon: item.ribbon,
 		    })
+
+		    const parsedOrderRes = insertResultSchema.parse(addressRes);
+		    const orderId = parsedOrderRes[0].insertId;
+		    
+		    const parsedSpecificRes = insertResultSchema.parse(addressRes);
+		    const specificId = parsedSpecificRes[0].insertId;
 		    
 		    await db.insert(orderItems).values({
-			orderId: orderRes[0].insertId,
-			specificItemId: specRes[0].insertId,
+			orderId: orderId,
+			specificItemId: specificId,
 			price: item.price
 		    })
 		}

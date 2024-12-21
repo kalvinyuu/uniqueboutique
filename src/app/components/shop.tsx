@@ -7,26 +7,27 @@ export default async function Products() {
 	const products = await getAllProducts();
 	return (
 	    <div className="overflow-hidden grid justify-center">
-	    {products.map(product => (
-		<div key={product.id} className="justify-center products-center mx-4 my-2">
-		    <Link href={`/${product.id}`}> 
-			<Image
-			src={`${product.imageLocation}`}
-			width={300}
-			height={400}
-			alt="Picture of the author"
-
-			/>	
-			<p>
-			    {product.name}
-			</p>
-			<p>
-			    {product.price}
-			</p>
-		    </Link>
-		</div>
-	    ))}
-      </div>
+		{products.map(product => (
+		    <div key={product.id} className="justify-center products-center mx-4 my-2">
+			<Link href={`/${product.id}`}> 
+			    <Image
+				src={`${product.imageLocation}`}
+				    width={300}
+				    height={400}
+				alt="Picture of the author"
+				sizes="(max-width: 768px) 100vw, 300px"
+				priority
+			    />	
+			    <p>
+				{product.name}
+			    </p>
+			    <p>
+				{product.price}
+			    </p>
+			</Link>
+		    </div>
+		))}
+	    </div>
 	)
     } catch (error) {
 	console.error('Error fetching products:', error);
