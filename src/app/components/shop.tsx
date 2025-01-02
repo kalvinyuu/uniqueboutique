@@ -6,18 +6,18 @@ export default async function Products() {
     try{
 	const products = await getAllProducts();
 	return (
-	    <div className="overflow-hidden grid justify-center">
+	    <div className="overflow-hidden text-gray-700 grid justify-center">
 		{products.map(product => (
 		    <div key={product.id} className="justify-center products-center mx-4 my-2">
 			<Link href={`/${product.id}`}> 
 			    <Image
 				src={`${product.imageLocation}`}
-				    width={300}
-				    height={400}
-				alt="Picture of the author"
-				sizes="(max-width: 768px) 100vw, 300px"
-				priority
-			    />	
+				width={300}
+				height={400}
+				    alt="Picture of the author"
+				    sizes="(min-width: 420px) 300px, calc(96vw - 84px)"
+				    priority
+			    />
 			    <p>
 				{product.name}
 			    </p>

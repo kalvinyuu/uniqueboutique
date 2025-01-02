@@ -4,6 +4,8 @@ import  NavContent  from "@/app/components/navRest"
 import CartProvider from './components/providers';
 import { ClerkProvider } from '@clerk/nextjs';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata = {
     title: 'Unique Boutique - Custom Pajamas',
@@ -15,29 +17,49 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-      <html lang="en">
-	  <body className="overflow-x-hidden bg-pink-100 font-sans  p-8 mx-auto max-w-7xl space-y-8">
-              <ClerkProvider>
-		  <CartProvider>
-		      <Navbar>
-			  <NavContent/>
-		      </Navbar >
-		      <main className="">
-			  {children}
-			  <SpeedInsights />
-		      </main>
-		      <footer className="bg-pink-100 py-6 text-center border-t-2 border-white ">
-			  <p className="text-pink-600 ">Made with love at Unique Boutique</p>
-			  <p>
-			      <a href="#" className="text-pink-600 font-bold hover:underline ">Contact Us</a> |{' '}
-			      <a href="#" className="text-pink-600 font-bold hover:underline ">Our Story</a>
-			  </p>
-		      </footer>
-		      
-		  </CartProvider>
-              </ClerkProvider>
-	  </body>
-      </html>
-  );
+    return (
+	<ClerkProvider>
+	<html lang="en">
+	    <body className="overflow-x-hidden bg-white font-sans  p-8 mx-auto max-w-7xl space-y-8">
+		<CartProvider>
+		    <header>
+			<Navbar>
+			    <NavContent/>
+			</Navbar >
+		    </header>
+		    <main className="">
+			{children}
+			<SpeedInsights />
+		    </main>
+		    <footer className="bg-pink-100 py-6 text-center border-t-2 border-white ">
+			<p className="text-gray-700 ">Made with love at Unique Boutique</p>
+			<p>
+			    <a href="#" className="text-gray-700 font-bold hover:underline ">Contact Us</a> |{' '}
+			    <a href="#" className="text-gray-700 font-bold hover:underline ">Our Story</a>
+			</p>
+			<Link className="flex items-center hover:bg-pink-100 transition duration-200 rounded-xl" href="https://facebook.com">
+			    <Image
+				src="/facebook.svg"
+				width={30} // Adjusted width
+				height={30} // Adjusted height
+				className="h-8 w-8" // Matches text height
+				alt="facebook link"
+			    />
+			</Link>
+			<Link className="flex items-center hover:bg-pink-100
+					 rounded-xl transition duration-200" href="https://instagram.com">
+			    <Image
+				src="/instagram.svg"
+				width={30} // Adjusted width
+				height={30} // Adjusted height
+				className="h-8 w-8" // Matches text height
+				alt="instagram link"
+			    />
+			</Link>
+		    </footer>
+		</CartProvider>
+	    </body>
+	</html>
+	</ClerkProvider>
+    );
 }

@@ -31,9 +31,11 @@ export default function Navbar({
 	}
     }, [lastScrollY]);
     return (
-        <nav className={`mad-line-navbar sticky top-0 w-full flex items-center justify-between p-4 bg-pink-100 text-pink-600 border-b-2 border-white shadow-md dark:bg-purple-200 bg-fixed ${isVisible ? "translate-y-0" : "-translate-y-full"} `}>
+	<>
+        <div className={`${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
 	    {children}
-        </nav>
+        </div>
+	</>
     );
 }
 

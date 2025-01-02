@@ -1,4 +1,4 @@
-import { sqliteTable, AnySQLiteColumn, index, foreignKey, integer, text, numeric } from "drizzle-orm/sqlite-core"
+import { sqliteTable, AnySQLiteColumn, index, foreignKey, integer, text, numeric, real } from "drizzle-orm/sqlite-core"
   import { sql } from "drizzle-orm"
 
 export const addresses = sqliteTable("addresses", {
@@ -56,7 +56,7 @@ export const orders = sqliteTable("orders", {
 	userId: integer("user_id").default(sql`(NULL)`).references(() => users.userId),
 	orderDate: numeric("order_date").default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 	totalAmount: numeric("total_amount").notNull(),
-	varchar: text({ length: 29 }).default("Your order has been received.").notNull(),
+	orderStatus: text("order_status", { length: 29 }).default("Your order has been received.").notNull(),
 	addressId: integer("address_id").notNull().references(() => addresses.addressId),
 },
 (table) => {
@@ -70,8 +70,8 @@ export const productCatalouge = sqliteTable("product_catalouge", {
 	id: integer().primaryKey({ autoIncrement: true }).notNull(),
 	name: text({ length: 100 }).notNull(),
 	imageLocation: text("image_location", { length: 100 }).notNull(),
-	price: numeric().notNull(),
 	category: text({ length: 100 }).notNull(),
+	price: real().notNull(),
 });
 
 export const productImages = sqliteTable("product_images", {
