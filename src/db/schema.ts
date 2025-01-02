@@ -50,9 +50,9 @@ export const mensSize = sqliteTable("mens_size", {
     id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
-export const womansSize = sqliteTable("womans_size", {
+export conspt womansSize = sqliteTable("womans_size", {
     size: text("size").notNull(),
-    igd: integer("id").primaryKey({ autoIncrement: true }).notNull(),
+    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
 export const orderItems = sqliteTable("order_items", {
