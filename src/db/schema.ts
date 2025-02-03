@@ -1,10 +1,20 @@
 import { sqliteTable, integer, text, real } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
+export const images = sqliteTable("images", {
+    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
+    url: text("url").notNull(),
+    width: integer("width").notNull(),
+    height: integer("height").notNull(),
+    name: text("name").notNull(),
+    type: text("type").notNull(),
+    productId: integer("product_id").references(() => productCatalouge.id),
+});
+
 export const productCatalouge = sqliteTable("product_catalouge", {
     id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
     name: text("name").notNull(),
-    imageLocation: text("image_location").notNull(),
+    imageLocation: text("image").notNull(),
     price: real("price").notNull(),
     category: text("category").notNull(),
 });
@@ -16,18 +26,6 @@ export const specificItem = sqliteTable("specific_item", {
     colour: integer("colour").references(() => colour.id).notNull(),
     ribbon: integer("ribbon").references(() => ribbon.id),
     message: text("message"),
-});
-
-export const productImages = sqliteTable("product_images", {
-    productId: integer("product_id").references(() => productCatalouge.id),
-    imageId: integer("image_id").references(() => images.id),
-});
-
-export const images = sqliteTable("images", {
-    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
-    url: text("url").notNull(),
-    width: integer("width").notNull(),
-    height: integer("height").notNull(),
 });
 
 export const colour = sqliteTable("colour", {
@@ -42,7 +40,7 @@ export const ribbon = sqliteTable("ribbon", {
 
 export const kidsSize = sqliteTable("kids_size", {
     size: text("size").notNull(),
-    sizeId: integer("size_id").primaryKey({ autoIncrement: true }).notNull(),
+    id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
 export const mensSize = sqliteTable("mens_size", {
@@ -50,7 +48,7 @@ export const mensSize = sqliteTable("mens_size", {
     id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
 });
 
-export conspt womansSize = sqliteTable("womans_size", {
+export const womansSize = sqliteTable("womans_size", {
     size: text("size").notNull(),
     id: integer("id").primaryKey({ autoIncrement: true }).notNull(),
 });

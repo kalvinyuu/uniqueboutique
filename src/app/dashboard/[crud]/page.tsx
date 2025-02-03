@@ -3,8 +3,9 @@ import Image from "next/image"
 import { getImage } from "@/app/utils"
 
 
-export default async function Crud({ params }: { params: { crud: number } }) {
-    const image = await getImage(params.crud);
+export default async function Crud({ params }: { params: Promise<{ crud: string }> }) {
+    const imageID = parseInt((await params).crud, 10)
+    const image = await getImage(imageID);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission

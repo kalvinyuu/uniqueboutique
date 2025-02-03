@@ -9,8 +9,9 @@ import { eq } from 'drizzle-orm';
 import { S3Client, PutObjectCommand,   } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto"
-import {Orders} from "@/app/types"
+import {Orders, Product} from "@/app/types"
 import { format, Order } from "@/app/zod"
+import { cache } from 'react'
 
 export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
 	await db.insert(users).values({
@@ -20,6 +21,15 @@ export async function authManage(email:string|null=null, name:string|null=null, 
 	})
 }
 
+export const getAllProducts = cache(async (): Promise<Product[]> => {
+    try {
+        const results: Product[] = await db.select().from(productCatalouge)
+        return results
+    } catch (error) {
+        console.error('Error fetching products:', error)
+        throw new Error('Failed to fetch data')
+    }
+})
 
 
 export async function orderStatus(orderID: number) {
@@ -115,48 +125,53 @@ type GetSignedURLParams = {
     fileType: string
     fileSize: number
     checksum: string
+    name: string
+    type: string
+    productId?: number | null
 }
 export const getSignedURL = async ({
-    fileType,
-    fileSize,
-    checksum,
-}: GetSignedURLParams): SignedURLResponse => {
+  fileType,
+  fileSize,
+  checksum,
+  name,
+  type,
+  width,
+  height,
+  productId,
+}: GetSignedURLParams & { width: number; height: number }): SignedURLResponse => {
+  if (!allowedFileTypes.includes(fileType)) {
+    return { failure: 'File type not allowed' };
+  }
 
+  if (fileSize > maxFileSize) {
+    return { failure: 'File size too large' };
+  }
 
-    if (!allowedFileTypes.includes(fileType)) {
-	return { failure: "File type not allowed" }
-    }
+  const fileName = generateFileName();
 
-    if (fileSize > maxFileSize) {
-	return { failure: "File size too large" }
-    }
+  const putObjectCommand = new PutObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME!,
+    Key: fileName,
+    ContentType: fileType,
+    ContentLength: fileSize,
+    ChecksumSHA256: checksum,
+  });
 
-    const fileName = generateFileName()
-
-    const putObjectCommand = new PutObjectCommand({
-	Bucket: process.env.AWS_BUCKET_NAME,
-	Key: fileName,
-	ContentType: fileType,
-	ContentLength: fileSize,
-	ChecksumSHA256: checksum,
-    })
-
-    const url = await getSignedUrl(
-	s3Client,
-	putObjectCommand,
-	{ expiresIn: 60 } // 60 seconds
-    )
-
-    console.log({ success: url })
-
-    await db
-	.insert(images)
-	.values({
-	    url: url.split("?")[0],
-	    width: 0,
-	    height: 0,
-	})
-    const results = await db.select().from(images)
+    const url = await getSignedUrl(s3Client, putObjectCommand, { expiresIn: 60 });
     
-    return { success: { url, id: results[0].imageId } }
-}
+    const results = await db
+	.insert(images).values({
+    url: url.split('?')[0],
+    width,
+    height,
+    name,
+    type,
+    productId: productId || null,
+	}).returning()
+
+    if (!results) {
+    return { failure: 'Failed to save image details in the database' };
+  }
+    
+    return { success: { url, id: results[0].id } };
+};

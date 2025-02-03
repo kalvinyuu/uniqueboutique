@@ -82,7 +82,7 @@ async function OrderItemsViewer({ orderID }: { orderID: number }) {
         return (
             <div>
                 {orderItems.map((item) => (
-                    <div key={item.orderItemId}>
+                    <div key={item.id}>
 			<SpecificItem ID={item.specificItemId} />
                         <div>Price: {item.price}</div>
                     </div>

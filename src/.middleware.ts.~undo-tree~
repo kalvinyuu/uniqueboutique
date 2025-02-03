@@ -1,0 +1,14 @@
+(undo-tree-save-format-version . 1)
+"e7b38390d124f3795296e24851e61975336b04ee"
+[nil nil nil nil (26481 27719 165184 0) 0 nil]
+([nil nil ((#("import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+
+
+export default clerkMiddleware()
+
+
+export const config = {
+  matcher: [\"/((?!.+\\\\.[\\\\w]+$|_next).*)\", \"/\", \"/(api|trpc)(.*)\"],
+};" 0 6 (face font-lock-keyword-face fontified t) 6 47 (fontified t) 47 51 (face font-lock-keyword-face fontified t) 51 52 (fontified t) 52 74 (face font-lock-string-face fontified t) 74 77 (fontified t) 77 83 (face font-lock-keyword-face fontified t) 83 84 (fontified t) 84 91 (face font-lock-keyword-face fontified t) 91 92 (fontified t) 92 107 (face font-lock-function-name-face fontified t) 107 112 (fontified t) 112 118 (face font-lock-keyword-face fontified t) 118 119 (fontified t) 119 124 (face font-lock-keyword-face fontified t) 124 125 (fontified t) 125 131 (face font-lock-variable-name-face fontified t) 131 134 (fontified t) 134 148 (font-lock-multiline t fontified t) 148 177 (font-lock-multiline t face font-lock-string-face fontified t) 177 179 (font-lock-multiline t fontified t) 179 182 (font-lock-multiline t face font-lock-string-face fontified t) 182 184 (font-lock-multiline t fontified t) 184 201 (font-lock-multiline t face font-lock-string-face fontified t) 201 205 (font-lock-multiline t fontified t) 205 206 (fontified t)) . 1) (undo-tree-id0 . -206) (undo-tree-id1 . -36) (undo-tree-id2 . -36) (t 26372 25085 184205 385000)) nil (26481 27719 165182 0) 0 nil])
+([nil current ((nil rear-nonsticky nil 752 . 753) (nil fontified nil 1 . 753) (1 . 753)) nil (26481 27719 165163 0) 0 nil])
+nil

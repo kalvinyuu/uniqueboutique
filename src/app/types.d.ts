@@ -7,24 +7,24 @@ export type Product = {
 }
 
 export type Images = {
-    imageId: number,
+    id: number,
     url: string,
     width: number,
     height: number
 }
 
 export type Size = {
-    sizeId: number,
+    id: number,
     size: string
 }[]
 
 export type Colour = {
-    colourId: number,
+    id: number,
     colour: string
 }[]
 
 export type Ribbon = {
-    ribbonId: number,
+    id: number,
     ribbon: string
 }[]
 
@@ -94,14 +94,14 @@ const OrderStat = {
 export type OrderStat = typeof OrderStat[keyof typeof OrderStat]
 
 export type OrderItems = {
-    orderItemId: number;
+    id: number;
     orderId: number;
     specificItemId: number;
     price: string;
 }[]
 
 export type Addresses = {
-    addressId: number;
+    id: number;
     userId: number | null;
     name: string;
     streetAddress: string;

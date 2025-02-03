@@ -4,11 +4,14 @@ import ProductImageForm from "./productImage";
 import Form from "./imageForm";
 import ImageBank from "./imageDisplay";
 import BothOrders from "./order";
+import {getAllProducts} from '@/app/utils'
 
-export default function AdminDashboard() {
+
+export default async function AdminDashboard() {
     if (!checkRole("admin")) {
         redirect("/");
     }
+    const prod = await getAllProducts();
     return (
         <div className="min-h-screen   p-6">
             <div className="max-w-7xl mx-auto space-y-6">
@@ -28,7 +31,7 @@ export default function AdminDashboard() {
                         </section>
                         <section className="rounded-lg shadow p-6">
                             <h2 className="text-xl font-semibold text-gray-800  mb-4">Form Section</h2>
-                            <Form />
+                            <Form products={prod}/>
                         </section>
                     </div>
                     <div className="space-y-6">

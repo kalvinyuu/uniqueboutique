@@ -23,7 +23,7 @@ export const authManage = cache(async (email: string | null = null, name: string
 
 export const getAddresses = cache(async (addressID: number): Promise<Addresses> => {
     const address = await db.query.addresses.findFirst({
-        where: eq(addresses.addressId, addressID)
+        where: eq(addresses.id, addressID)
     })
     if (!address) {
         throw new Error(`failed to fetch address`)
@@ -104,14 +104,14 @@ export const getColourTable = cache(async () => {
     return colourTable
 })
 
-export const getImages = cache(async (): Promise<Images[]> => {
+export const getImages = cache(async () => {
     const image: Images[] = await db.select().from(images)
     return image
 })
 
 export const getImage = cache(async (imageId: number) => {
     const image = await db.query.images.findFirst({
-        where: eq(images.imageId, imageId),
+        where: eq(images.id, imageId),
     })
     if (!image) {
         throw new Error(`Image with id ${imageId} not found`)
@@ -120,7 +120,7 @@ export const getImage = cache(async (imageId: number) => {
 })
 
 export const getSizeCategory = cache(async (x: number) => {
-    let size: Size = [{ sizeId: 1, size: "M" }]
+    let size: Size = [{ id: 1, size: "M" }]
     let ribbonTable: Ribbon = []
     const product: Product = await getProduct(x)
     switch (product?.category) {

@@ -8,8 +8,8 @@ export default async function ProductImageForm() {
        return (
         <div className="grid justify-center">
             {images.map(image => (
-                <div key={image.imageId} className="justify-center products-center mx-4 my-2">
-		    <Link href={`/dashboard/${image.imageId}`}>
+                <div key={image.id} className="justify-center products-center mx-4 my-2">
+		    <Link href={`/dashboard/${image.id}`}>
                         <Image className="object-cover" src={image.url} alt="pjs" width={200} height={200} />
 		    </Link>
                 </div>

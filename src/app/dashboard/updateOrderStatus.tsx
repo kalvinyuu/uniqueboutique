@@ -5,7 +5,6 @@ import { updateOrderStatus } from "@/app/actions";
 
 export function UpdateOrderStat({ ID }: { ID: number }) {
     const [status, setStatus] = useState<"Received." | "Shipped.">('Received.');
-
     
     function handleClick() {
         if (status === "Received.") {

@@ -74,7 +74,7 @@ async function OrderItemsViewer({ orderID }: { orderID: number }) {
     return (
         <div>
             {orderItems.map((item) => (
-                <div key={item.orderItemId}>
+                <div key={item.id}>
                     <Suspense fallback={<div>Loading Item Details...</div>}>
                         <SpecificItem ID={item.specificItemId} />
                     </Suspense>

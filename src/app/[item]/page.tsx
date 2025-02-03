@@ -2,12 +2,13 @@ import Image from 'next/image'
 import ItemForm from '@/app/[item]/itemForm'
 import { getProduct, getColourTable, getSizeCategory } from "@/app/utils"
 
-export default async function Page({ params }: { params: { item: number } }) {
-    const product = await getProduct(params.item)
-    const { size, ribbonTable } = await getSizeCategory(params.item);
+export default async function Page({ params }: { params: Promise<{ item: string }> }) {
+    const itemId = parseInt((await params).item, 10)
+    const product = await getProduct(itemId)
+    const { size, ribbonTable } = await getSizeCategory(itemId);
     const colourTable = await getColourTable()
     return (
-        <div className="flex flex-row">
+        <div  className="flex flex-row">
 
             {product ? (
                 <div className="justify-center products-center">

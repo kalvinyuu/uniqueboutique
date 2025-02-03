@@ -51,7 +51,7 @@ export default function ItemForm({
             }, 1000);
             return;
         }
-
+	
         // Create new metadata for current item
         const newMetadata = {
             size: selectedSize,
@@ -61,11 +61,11 @@ export default function ItemForm({
             ribbon: selectedRibbon,
             price: product.price,
         };
-
+	
         // Get existing metadata for this product if it exists
         const existingItem = cartDetails?.[product.id];
         const existingMetadata = existingItem?.product_metadata?.data || [];
-
+	
         if (stripeProduct) {
             // Create a unique ID for this specific product variation
             const uniqueId = `${product.id}-${Date.now()}`;
@@ -75,7 +75,7 @@ export default function ItemForm({
                 ...stripeProduct,
                 id: uniqueId,
             };
-
+	    
             addItem(uniqueProduct, {
                 product_metadata: {
                     data: [newMetadata], // Each item has its own metadata
@@ -107,7 +107,7 @@ export default function ItemForm({
 			>
 			    <option value="">Select Size</option>
 			    {sizeTable.map((s) => (
-				<option key={s.sizeId} value={s.size}>
+				<option key={s.id} value={s.size}>
 				    {s.size}
 				</option>
 			    ))}
@@ -123,7 +123,7 @@ export default function ItemForm({
 			>
 			    <option value="">Select Colour</option>
 			    {colourTable.map((c) => (
-				<option key={c.colourId} value={c.colourId}>
+				<option key={c.id} value={c.id}>
 				    {c.colour}
 				</option>
 			    ))}
@@ -135,7 +135,7 @@ export default function ItemForm({
 			Select a ribbon:
 			<select onChange={(e) => setSelectedRibbon(Number(e.target.value))}>
 			    {ribbonTable.map((r) => (
-				<option key={r.ribbonId} value={r.ribbonId}>
+				<option key={r.id} value={r.id}>
 				    {r.ribbon}
 				</option>
 			    ))}
