@@ -1,3 +1,39 @@
+## Unique Boutique
+
+This is pyjama site was built for a family member which allows the shopper
+to order customised pyjamas which is increadibly annoying to configure in
+stripe!
+
+Therefore we think this project is useful to have its source code available
+and open to everyone...
+
+## The Things We're Most Proud of
+
+1. Using stripe metadata ta pass the users state, which contains the items
+they ordered and those items colour, size and even the message they wish
+to design on their pyjama top to the backend pretty much just the db. then
+pass that back to the user and put the info in their cart so they can
+validate before purchase. This had to be done through stripe webhooks 
+
+2. The dashboard and its functionalities even though they are few it
+allaws the admin to manage products and photos and orders
+
+
+## Why this matters to us
+
+They ultimately allow a smooth experience for the end user (the shopper),
+and the user which we produced this site for the (the admin). We wish this be
+almost modularised and modified to be used to produce stores for many
+people and purposes.
+
+## Roadmap
+
+- [ ] write a useful git commit
+- [ ] launch the site
+- [ ] add functionalities such as p&p to strip prices for secondary things
+like ribbons, messages etc.
+- [ ] finish the design
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
