@@ -3,8 +3,8 @@ import Image from "next/image"
 import { getImage } from "@/app/utils"
 
 
-export default async function Crud({ params }: { params: { crud: number } }) {
-    const image = await getImage(params.crud)
+export default async function Crud({ params }: { params: Promise<{ crud: string }> }) {
+    const image = await getImage(parseInt((await params).crud, 10))
 
     return (
         <>
