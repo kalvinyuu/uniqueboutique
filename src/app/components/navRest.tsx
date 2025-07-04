@@ -43,20 +43,6 @@ export default async function NavContent() {
 		  </Link>
 	      ))}
 	  </div>
-	  <div className="flex bg-gray-50 py-2 ml-8 shadow-md w-1/3 max-w-md ">
-	      <input
-		  type="text"
-		  placeholder="Search..."
-		  className="bg-transparent w-full outline-none text-sm text-gray-700 "
-	      />
-	      <Image
-		  src="/search-icon.svg" // Replace with your actual icon or SVG path
-		  alt="Search"
-		  width={16}
-		  height={16}
-		  className="ml-2 text-gray-500"
-	      />
-	  </div>
 	  <div className="flex items-center space-x-4 px-6">
               <SignedIn>
 		  <Users />

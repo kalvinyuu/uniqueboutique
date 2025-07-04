@@ -1,14 +1,16 @@
 (undo-tree-save-format-version . 1)
-"60f9377638fc67176f0a81f3e8dac0f2f7599c3a"
-[nil nil nil nil (26458 23619 248427 0) 0 nil]
-([nil nil ((581 . 585) (t 26455 34880 600444 86000)) nil (26458 23619 248426 0) 0 nil])
-([nil nil ((#("x" 0 1 (part-side jsx)) . -581) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (#("f" 0 1 (part-side jsx)) . -582) (undo-tree-id2 . -1) (undo-tree-id3 . -1) (#("x" 0 1 (part-side jsx)) . -583) (undo-tree-id4 . -1) (undo-tree-id5 . -1) (#("f" 0 1 (part-side jsx)) . -584) (undo-tree-id6 . -1) (undo-tree-id7 . -1) 585) nil (26458 23619 248421 0) 0 nil])
+"fe76ba25633e3b0ad959de8178d16ece27b4cfc8"
+[nil nil nil nil (26727 6232 888325 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])]
+([nil nil ((581 . 585)) ((#("xfxf" 0 1 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 1 2 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 2 3 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 3 4 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx)) . 581)) (26727 6236 311929 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
+([nil nil ((#("xfxf" 0 1 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 1 2 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 2 3 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx) 3 4 (face font-lock-variable-name-face font-lock-multiline t fontified t part-side jsx)) . 581)) ((581 . 585)) (26727 6236 650446 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
 ([nil nil ((#("
-" 0 1 (jsx-depth 1 part-side jsx)) . -2039) (undo-tree-id6 . -1) (undo-tree-id7 . -1) 2040 (t 26458 23619 251821 567000)) nil (26532 21070 388308 0) 0 nil])
+" 0 1 (font-lock-multiline t fontified t jsx-depth 1 part-side jsx)) . 2039)) ((2039 . 2040)) (26727 6236 860318 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
 ([nil nil ((#("
-" 0 1 (jsx-depth 1 part-side jsx)) . -1513) (undo-tree-id5 . -1) 1514) nil (26532 21070 388305 0) 0 nil])
+" 0 1 (font-lock-multiline t fontified t jsx-depth 1 part-side jsx)) . 1513) (undo-tree-id7 . -1)) ((1513 . 1514)) (26727 6237 63417 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
 ([nil nil ((#("
-" 0 1 (jsx-depth 1 part-side jsx)) . -1108) (undo-tree-id3 . -1) (undo-tree-id4 . -1) 1109) nil (26532 21070 388303 0) 0 nil])
+" 0 1 (font-lock-multiline t fontified t jsx-depth 1 part-side jsx)) . 1108)) ((1108 . 1109)) (26727 6237 279908 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
+([nil nil ((#("
+" 0 1 (font-lock-multiline t fontified t jsx-depth 1 part-side jsx)) . 957) (undo-tree-id8 . -1)) ((957 . 958) (t 26532 21070 391834 815000)) (26727 6237 498105 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
 ([nil current ((#("
-" 0 1 (jsx-depth 1 part-side jsx)) . -957) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1) 958) nil (26532 21070 388298 0) 0 nil])
+" 0 1 (font-lock-multiline t fontified t)) . 271) (t 26532 21070 391834 815000)) ((271 . 272)) (26727 6237 752008 0) 0 (:visualizer [0 1 0 #<marker at 1 in  *undo-tree*>])])
 nil

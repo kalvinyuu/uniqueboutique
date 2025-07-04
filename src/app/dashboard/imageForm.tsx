@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { getSignedURL,getAllProducts } from '@/app/actions';
-import { Product } from "@/app/types"
+import { Product, } from "@/app/types"
 
 const IMAGE_TYPES = [
     { value: 'product-main', label: 'Product Main Image' },
@@ -141,7 +141,7 @@ export default function Form({products}: {products: Product[]}) {
                     <option value="">Select a product</option>
                     {products.map((product) => (
                         <option key={product.id} value={product.id}>
-                            {product.name}
+                            {product.category}
                         </option>
                     ))}
                 </select>

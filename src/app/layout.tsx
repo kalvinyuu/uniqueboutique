@@ -1,9 +1,14 @@
 import './globals.css';
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 import  Navbar  from '@/app/components/navbar';
 import  NavContent  from "@/app/components/navRest"
 import CartProvider from './components/providers';
 import { ClerkProvider } from '@clerk/nextjs';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -31,31 +36,20 @@ export default function RootLayout({
 			{children}
 			<SpeedInsights />
 		    </main>
-		    <footer className="bg-pink-100 py-6 text-center border-t-2 border-white ">
+		    <footer className="py-6 text-center border-t-2 border-white ">
 			<p className="text-gray-700 ">Made with love at Unique Boutique</p>
 			<p>
 			    <a href="#" className="text-gray-700 font-bold hover:underline ">Contact Us</a> |{' '}
 			    <a href="#" className="text-gray-700 font-bold hover:underline ">Our Story</a>
 			</p>
-			<Link className="flex items-center hover:bg-pink-100 transition duration-200 rounded-xl" href="https://facebook.com">
-			    <Image
-				src="/facebook.svg"
-				width={30} // Adjusted width
-				height={30} // Adjusted height
-				className="h-8 w-8" // Matches text height
-				alt="facebook link"
-			    />
-			</Link>
-			<Link className="flex items-center hover:bg-pink-100
-					 rounded-xl transition duration-200" href="https://instagram.com">
-			    <Image
-				src="/instagram.svg"
-				width={30} // Adjusted width
-				height={30} // Adjusted height
-				className="h-8 w-8" // Matches text height
-				alt="instagram link"
-			    />
-			</Link>
+			<div className="flex justify-center space-x-4 mt-4">
+			    <Link href="https://facebook.com" className="text-gray-700 hover:text-pink-500">
+				<FontAwesomeIcon icon={faFacebook} size="2x" />
+			    </Link>
+			    <Link href="https://instagram.com" className="text-gray-700 hover:text-pink-500">
+				<FontAwesomeIcon icon={faInstagram} size="2x" />
+			    </Link>
+			</div>
 		    </footer>
 		</CartProvider>
 	    </body>

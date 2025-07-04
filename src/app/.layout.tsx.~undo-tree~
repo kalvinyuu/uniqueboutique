@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"31183f4e6886573328bf85e12d7c6892de9a06a2"
+"457d35e6407b8ee8a09e607101b0bad5705c3943"
 [nil nil nil nil (26464 23895 878528 0) 0 nil]
 ([nil nil ((74 . 75) (t 26447 31763 980665 978000)) nil (26464 23895 878527 0) 0 nil])
 ([nil nil ((83 . 86) (75 . 84)) nil (26464 23895 878527 0) 0 nil])
@@ -173,5 +173,62 @@ export default function RootLayout({
 ([nil nil ((1941 . 1948)) nil (26480 52115 901549 0) 0 nil])
 ([nil nil ((1943 . 1957) (#("Clerk" 0 5 (part-side jsx)) . -1943) (undo-tree-id40 . -5) 1948) nil (26480 52115 901546 0) 0 nil])
 ([nil nil ((#(" " 0 1 (font-lock-face web-mode-html-attr-value-face tag-type start tag-name "body" tag-attr t jsx-depth 1 part-side jsx)) . -684) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1) 685 (t 26480 52115 905443 227000)) nil (26530 55947 553031 0) 0 nil])
-([nil current ((684 . 695)) nil (26530 55947 553018 0) 0 nil])
+([nil nil ((684 . 695)) nil (26530 55947 553018 0) 0 nil])
+([nil nil ((#("bg-pink-100" 0 11 (font-lock-multiline t face font-lock-string-face fontified t)) . 925) (undo-tree-id131 . -11) (t 26530 55947 556971 7000)) nil (26726 58027 219493 0) 0 nil])
+([nil nil ((#(" " 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -925) (undo-tree-id130 . -1) 926) nil (26726 58027 219491 0) 0 nil])
+([nil nil ((291 . 1767) (#("Image from 'next/image';
+import Link from 'next/link';
+
+export const metadata = {
+    title: 'Unique Boutique - Custom Pajamas',
+    description: 'Create your dream pajamas at Unique Boutique!',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+    return (
+	<ClerkProvider>
+	<html lang=\"en\">
+	    <body className=\"overflow-x-hidden bg-white font-sans text-black p-8 mx-auto max-w-7xl space-y-8\">
+		<CartProvider>
+		    <header>
+			<Navbar>
+			    <NavContent/>
+			</Navbar >
+		    </header>
+		    <main className=\"\">
+			{children}
+			<SpeedInsights />
+		    </main>
+		    <footer className=\"py-6 text-center border-t-2 border-white \">
+			<p className=\"text-gray-700 \">Made with love at Unique Boutique</p>
+			<p>
+			    <a href=\"#\" className=\"text-gray-700 font-bold hover:underline \">Contact Us</a> |{' '}
+			    <a href=\"#\" className=\"text-gray-700 font-bold hover:underline \">Our Story</a>
+			</p>
+			<Link className=\"flex items-center hover:bg-pink-100 transition duration-200 rounded-xl\" href=\"https://facebook.com\">
+			    <Image
+				src=\"/facebook.svg\"
+				width={30} // Adjusted width
+				height={30} // Adjusted height
+				className=\"h-8 w-8\" // Matches text height
+				alt=\"facebook link\"
+			    />
+			</Link>
+			<Link className=\"flex items-center hover:bg-pink-100
+					 rounded-xl transition duration-200\" href=\"https://instagram.com\">
+			    <Image
+				src=\"/instagram.svg\"
+				width={30} // Adjusted width
+				height={30} // Adjusted height
+				className=\"h-8 w-8\" // Matches text height
+				alt=\"instagram link\"
+			    />
+			</Link" 0 6 (fontified t) 6 10 (face font-lock-keyword-face fontified t) 10 11 (fontified t) 11 23 (face font-lock-string-face fontified t) 23 25 (fontified t) 25 31 (face font-lock-keyword-face fontified t) 31 37 (fontified t) 37 41 (face font-lock-keyword-face fontified t) 41 42 (fontified t) 42 53 (face font-lock-string-face fontified t) 53 56 (fontified t) 56 62 (face font-lock-keyword-face fontified t) 62 63 (fontified t) 63 68 (face font-lock-keyword-face fontified t) 68 69 (fontified t) 69 77 (face font-lock-variable-name-face fontified t) 77 80 (fontified t) 80 93 (font-lock-multiline t fontified t) 93 127 (font-lock-multiline t face font-lock-string-face fontified t) 127 146 (font-lock-multiline t fontified t) 146 193 (font-lock-multiline t face font-lock-string-face fontified t) 193 196 (font-lock-multiline t fontified t) 196 199 (fontified t) 199 205 (face font-lock-keyword-face fontified t) 205 206 (fontified t) 206 213 (face font-lock-keyword-face fontified t) 213 214 (fontified t) 214 222 (face font-lock-keyword-face fontified t) 222 223 (fontified t) 223 233 (font-lock-multiline t face font-lock-function-name-face fontified t) 233 234 (font-lock-multiline t fontified t) 234 238 (font-lock-multiline t fontified t) 238 246 (face font-lock-variable-name-face font-lock-multiline t fontified t) 246 249 (font-lock-multiline t fontified t) 249 251 (font-lock-multiline t fontified t) 251 255 (font-lock-multiline t fontified t) 255 263 (face font-lock-variable-name-face font-lock-multiline t fontified t) 263 265 (font-lock-multiline t fontified t) 265 280 (font-lock-multiline t face font-lock-type-face fontified t) 280 282 (font-lock-multiline t fontified t) 282 283 (font-lock-multiline t fontified t) 283 284 (font-lock-multiline t fontified t) 284 285 (fontified t) 285 286 (font-lock-multiline t typescript--pstate ((nil 0 function 505 ("RootLayout") nil) (nil -2305843009213693952 toplevel nil nil nil)) fontified t) 286 291 (font-lock-multiline t fontified t) 291 297 (font-lock-multiline t face font-lock-keyword-face fontified t) 297 302 (font-lock-multiline t fontified t) 302 315 (font-lock-multiline t face font-lock-type-face fontified t) 315 329 (font-lock-multiline t fontified t) 329 333 (font-lock-multiline t face font-lock-string-face fontified t) 333 356 (font-lock-multiline t fontified t) 356 437 (font-lock-multiline t face font-lock-string-face fontified t) 437 442 (font-lock-multiline t fontified t) 442 454 (font-lock-multiline t face font-lock-type-face fontified t) 454 475 (font-lock-multiline t fontified t) 475 481 (font-lock-multiline t face font-lock-type-face fontified t) 481 556 (font-lock-multiline t fontified t) 556 558 (font-lock-multiline t face font-lock-string-face fontified t) 558 560 (font-lock-multiline t fontified t) 560 633 (font-lock-multiline t fontified t) 633 676 (font-lock-multiline t face font-lock-string-face fontified t) 676 694 (font-lock-multiline t fontified t) 694 710 (font-lock-multiline t face font-lock-string-face fontified t) 710 771 (font-lock-multiline t fontified t) 771 774 (font-lock-multiline t face font-lock-string-face fontified t) 774 785 (font-lock-multiline t fontified t) 785 827 (font-lock-multiline t face font-lock-string-face fontified t) 827 845 (font-lock-multiline t fontified t) 845 848 (font-lock-multiline t face font-lock-string-face fontified t) 848 865 (font-lock-multiline t fontified t) 865 868 (font-lock-multiline t face font-lock-string-face fontified t) 868 879 (font-lock-multiline t fontified t) 879 921 (font-lock-multiline t face font-lock-string-face fontified t) 921 963 (font-lock-multiline t fontified t) 963 1035 (font-lock-multiline t face font-lock-string-face fontified t) 1035 1041 (font-lock-multiline t fontified t) 1041 1063 (font-lock-multiline t face font-lock-string-face fontified t) 1063 1087 (font-lock-multiline t fontified t) 1087 1102 (font-lock-multiline t face font-lock-string-face fontified t) 1102 1118 (font-lock-multiline t fontified t) 1118 1121 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1121 1136 (font-lock-multiline t face font-lock-comment-face fontified t) 1136 1152 (font-lock-multiline t fontified t) 1152 1155 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1155 1171 (font-lock-multiline t face font-lock-comment-face fontified t) 1171 1185 (font-lock-multiline t fontified t) 1185 1194 (font-lock-multiline t face font-lock-string-face fontified t) 1194 1195 (font-lock-multiline t fontified t) 1195 1198 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1198 1218 (font-lock-multiline t face font-lock-comment-face fontified t) 1218 1226 (font-lock-multiline t fontified t) 1226 1241 (font-lock-multiline t face font-lock-string-face fontified t) 1241 1282 (font-lock-multiline t fontified t) 1282 1360 (font-lock-multiline t face font-lock-string-face fontified t) 1360 1366 (font-lock-multiline t fontified t) 1366 1389 (font-lock-multiline t face font-lock-string-face fontified t) 1389 1413 (font-lock-multiline t fontified t) 1413 1429 (font-lock-multiline t face font-lock-string-face fontified t) 1429 1445 (font-lock-multiline t fontified t) 1445 1448 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1448 1463 (font-lock-multiline t face font-lock-comment-face fontified t) 1463 1479 (font-lock-multiline t fontified t) 1479 1482 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1482 1498 (font-lock-multiline t face font-lock-comment-face fontified t) 1498 1512 (font-lock-multiline t fontified t) 1512 1521 (font-lock-multiline t face font-lock-string-face fontified t) 1521 1522 (font-lock-multiline t fontified t) 1522 1525 (font-lock-multiline t face font-lock-comment-delimiter-face fontified t) 1525 1545 (font-lock-multiline t face font-lock-comment-face fontified t) 1545 1553 (font-lock-multiline t fontified t) 1553 1569 (font-lock-multiline t face font-lock-string-face fontified t) 1569 1589 (font-lock-multiline t fontified t)) . 291) (undo-tree-id116 . -634) (undo-tree-id117 . -966) (undo-tree-id118 . -966) (undo-tree-id119 . -560) (undo-tree-id120 . -966) (undo-tree-id121 . -966) (undo-tree-id122 . -560) (undo-tree-id123 . -966) (undo-tree-id124 . -966) (undo-tree-id125 . -966) (undo-tree-id126 . -560) (undo-tree-id127 . -560) (undo-tree-id128 . -966) (undo-tree-id129 . -966)) nil (26726 58027 219489 0) 0 nil])
+([nil nil ((#("p" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1072) (undo-tree-id37 . -1) (undo-tree-id38 . -1) (undo-tree-id39 . -1) (undo-tree-id40 . -1) (undo-tree-id41 . -1) (undo-tree-id42 . -1) (undo-tree-id43 . -1) (undo-tree-id44 . -1) (undo-tree-id45 . -1) (undo-tree-id46 . -1) (#("i" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1073) (undo-tree-id47 . -1) (undo-tree-id48 . -1) (undo-tree-id49 . -1) (undo-tree-id50 . -1) (undo-tree-id51 . -1) (undo-tree-id52 . -1) (undo-tree-id53 . -1) (undo-tree-id54 . -1) (undo-tree-id55 . -1) (undo-tree-id56 . -1) (#("n" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1074) (undo-tree-id57 . -1) (undo-tree-id58 . -1) (undo-tree-id59 . -1) (undo-tree-id60 . -1) (undo-tree-id61 . -1) (undo-tree-id62 . -1) (undo-tree-id63 . -1) (undo-tree-id64 . -1) (undo-tree-id65 . -1) (undo-tree-id66 . -1) (#("k" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1075) (undo-tree-id67 . -1) (undo-tree-id68 . -1) (undo-tree-id69 . -1) (undo-tree-id70 . -1) (undo-tree-id71 . -1) (undo-tree-id72 . -1) (undo-tree-id73 . -1) (undo-tree-id74 . -1) (undo-tree-id75 . -1) (undo-tree-id76 . -1) (#("-" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1076) (undo-tree-id77 . -1) (undo-tree-id78 . -1) (undo-tree-id79 . -1) (undo-tree-id80 . -1) (undo-tree-id81 . -1) (undo-tree-id82 . -1) (undo-tree-id83 . -1) (undo-tree-id84 . -1) (undo-tree-id85 . -1) (undo-tree-id86 . -1) (#("1" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1077) (undo-tree-id87 . -1) (undo-tree-id88 . -1) (undo-tree-id89 . -1) (undo-tree-id90 . -1) (undo-tree-id91 . -1) (undo-tree-id92 . -1) (undo-tree-id93 . -1) (undo-tree-id94 . -1) (undo-tree-id95 . -1) (undo-tree-id96 . -1) (#("0" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1078) (undo-tree-id97 . -1) (undo-tree-id98 . -1) (undo-tree-id99 . -1) (undo-tree-id100 . -1) (undo-tree-id101 . -1) (undo-tree-id102 . -1) (undo-tree-id103 . -1) (undo-tree-id104 . -1) (undo-tree-id105 . -1) (undo-tree-id106 . -1) (#("0" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1079) (undo-tree-id107 . -1) (undo-tree-id108 . -1) (undo-tree-id109 . -1) (undo-tree-id110 . -1) (undo-tree-id111 . -1) (undo-tree-id112 . -1) (undo-tree-id113 . -1) (undo-tree-id114 . -1) (undo-tree-id115 . -1) 1080 (t 26726 57626 821237 845000)) nil (26726 58027 219475 0) 0 nil])
+([nil nil ((#("b" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1069) (undo-tree-id5 . -1) (undo-tree-id6 . -1) (undo-tree-id7 . -1) (undo-tree-id8 . -1) (undo-tree-id9 . -1) (undo-tree-id10 . -1) (undo-tree-id11 . -1) (undo-tree-id12 . -1) (undo-tree-id13 . -1) (undo-tree-id14 . -1) (undo-tree-id15 . -1) (undo-tree-id16 . -1) (#("g" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1070) (undo-tree-id17 . -1) (undo-tree-id18 . -1) (undo-tree-id19 . -1) (undo-tree-id20 . -1) (undo-tree-id21 . -1) (undo-tree-id22 . -1) (undo-tree-id23 . -1) (undo-tree-id24 . -1) (undo-tree-id25 . -1) (undo-tree-id26 . -1) (#("-" 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1071) (undo-tree-id27 . -1) (undo-tree-id28 . -1) (undo-tree-id29 . -1) (undo-tree-id30 . -1) (undo-tree-id31 . -1) (undo-tree-id32 . -1) (undo-tree-id33 . -1) (undo-tree-id34 . -1) (undo-tree-id35 . -1) (undo-tree-id36 . -1) 1072) nil (26726 58027 219413 0) 0 nil])
+([nil current ((#(" " 0 1 (font-lock-multiline t face font-lock-string-face fontified t)) . -1069) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1) (undo-tree-id3 . -1) (undo-tree-id4 . -1) 1070) nil (26726 58027 219388 0) 0 nil])
 nil

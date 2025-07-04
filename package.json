@@ -11,10 +11,14 @@
     "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.705.0",
-    "@aws-sdk/s3-presigned-post": "^3.666.0",
-    "@aws-sdk/s3-request-presigner": "^3.666.0",
+    "@aws-sdk/client-s3": "^3.842.0",
+    "@aws-sdk/s3-presigned-post": "^3.842.0",
+    "@aws-sdk/s3-request-presigner": "^3.842.0",
     "@clerk/nextjs": "^6.9.6",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@libsql/client": "^0.14.0",
     "@smithy/util-retry": "^3.0.10",
     "@stripe/react-stripe-js": "^2.8.1",

@@ -4,7 +4,6 @@ import { createProduct } from "@/app/actions" // Adjust path as needed
 
 export default async function Crud({ params }: { params: { crud: number } }) {
     const image = await getImage(params.crud);
-
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission
         const formData = new FormData(event.currentTarget);
