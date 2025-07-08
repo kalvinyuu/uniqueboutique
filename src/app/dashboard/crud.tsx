@@ -2,8 +2,7 @@ import Image from "next/image";
 import { getImage } from "@/app/utils";
 import { createProduct } from "@/app/actions" // Adjust path as needed
 
-export default async function Crud({ params }: { params: { crud: number } }) {
-    const image = await getImage(params.crud);
+export default async function Crud({image}) {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission
         const formData = new FormData(event.currentTarget);
@@ -32,9 +31,9 @@ export default async function Crud({ params }: { params: { crud: number } }) {
                 </select>
                 <label htmlFor="imageLocation">Image Location:</label>
                 <div className="grid justify-center">
-                    <Image src={image.url} alt="pjs" width={200} height={200} />
+                    <Image src={image} alt="pjs" width={200} height={200} />
                     <input
-                        value={image.url}
+                        value={image}
                         className="text-black"
                         type="text"
                         id="imageLocation"
