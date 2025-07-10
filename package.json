@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.842.0",
+    "@aws-sdk/s3-request-presigner": "^3.844.0",
     "@clerk/nextjs": "^6.9.6",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -26,6 +27,7 @@
     "@vercel/blob": "^0.24.1",
     "@vercel/speed-insights": "^1.1.0",
     "autoprefixer": "10.4.20",
+    "aws-sdk": "^2.1692.0",
     "caniuse-lite": "^1.0.30001726",
     "drizzle-orm": "^0.34.1",
     "next": "^15.1.3",

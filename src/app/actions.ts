@@ -12,6 +12,7 @@ import crypto from "crypto"
 import { Orders, Product} from "@/app/types"
 import { format, Order } from "@/app/zod"
 import { cache } from 'react'
+import { revalidatePath } from 'next/cache';
 
 export async function authManage(email:string|null=null, name:string|null=null, authId:string ) {
 	await db.insert(users).values({
@@ -102,7 +103,7 @@ export async function createProduct(formData: FormData) {
 const s3Client = new S3Client({
     region: process.env.AWS_REGION!,
     credentials: {
-i	accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+	accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
 	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     },
 })
@@ -175,3 +176,103 @@ export const getSignedURL = async ({
     
     return { success: { url, id: results[0].id } };
 };
+
+const computeSHA256 = async (file: File) => {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+};
+
+export async function createProductWithImage(formData: FormData) {
+    try {
+        // Extract form data
+        const name = formData.get('name') as string;
+        const price = parseFloat(formData.get('price') as string);
+        const category = formData.get('category') as string;
+        const imageName = formData.get('imageName') as string;
+        const imageType = formData.get('imageType') as string;
+        const imageWidth = parseInt(formData.get('imageWidth') as string) || 0;
+        const imageHeight = parseInt(formData.get('imageHeight') as string) || 0;
+        const imageFile = formData.get('image') as File;
+
+        // Validate required fields
+        if (!name || !price || !category || !imageName || !imageType || !imageFile) {
+            throw new Error('Missing required fields');
+        }
+
+        // Step 1: Upload image first to get the URL
+        const checksum = await computeSHA256(imageFile);
+        
+        const signedURLResult = await getSignedURL({
+            fileSize: imageFile.size,
+            fileType: imageFile.type,
+            checksum,
+            name: imageName,
+            type: imageType,
+            width: imageWidth,
+            height: imageHeight,
+            productId: null, // Will be updated after product creation
+        });
+
+        if (!signedURLResult.success) {
+            if (signedURLResult.failure) {
+                throw new Error(signedURLResult.failure);
+            }
+            throw new Error('Unknown error while getting signed URL');
+        }
+
+        const { url, id: imageId } = signedURLResult.success;
+        
+        // Upload file to S3
+        const uploadResponse = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': imageFile.type },
+            body: imageFile,
+        });
+
+        if (!uploadResponse.ok) {
+            // Clean up the image record if upload fails
+            await db.delete(images).where(eq(images.id, imageId));
+            throw new Error('Failed to upload image to S3');
+        }
+
+        // Get the clean S3 URL (without query parameters)
+        const imageUrl = url.split('?')[0];
+
+        // Step 2: Create product with the image URL
+        const productResults = await db.insert(productCatalouge).values({
+            name,
+            price,
+            category,
+            imageLocation: imageUrl,
+        }).returning();
+
+        const product = productResults[0];
+
+        // Step 3: Update the image record with the product ID
+        await db.update(images)
+            .set({ productId: product.id })
+            .where(eq(images.id, imageId));
+
+        // Step 4: Create Stripe product and price
+        const stripeProduct = await stripe.products.create({
+            name: name,
+        });
+
+        await stripe.prices.create({
+            currency: 'gbp', // Fixed your typo from 'gpp'
+            unit_amount: Math.round(price * 100),
+            product: stripeProduct.id,
+        });
+
+        console.log('Product created successfully!', product);
+
+        // Revalidate any relevant paths
+        revalidatePath('/dashboard');
+
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+}
