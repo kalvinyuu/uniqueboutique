@@ -1,20 +1,23 @@
-import Image from "next/image";
-import { getImage } from "@/app/utils";
-import { createProduct } from "@/app/actions" // Adjust path as needed
+'use client';
 
-export default async function Crud({image}) {
+import Image from "next/image";
+import { createProduct } from "@/app/actions";
+
+export default function Crud({ image, onProductCreated }: { image: string, onProductCreated: (productId: number) => void }) {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission
         const formData = new FormData(event.currentTarget);
 
         // Call the server action manually
         try {
-            await createProduct(formData);
-            console.log("Product created successfully!");
+            const productId = await createProduct(formData);
+            console.log("Product created successfully! ID:", productId);
+            onProductCreated(productId);
         } catch (error) {
             console.error("Error creating product:", error);
         }
     };
+    
     return (
         <div>
             <form onSubmit={handleSubmit}>
