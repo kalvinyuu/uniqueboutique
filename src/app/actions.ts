@@ -87,7 +87,7 @@ export async function createProduct(formData: FormData) {
             name: info.name,
         });
         await stripe.prices.create({
-            currency: 'gpp',
+            currency: 'gbp',
             unit_amount: Math.round(info.price * 100),
             product_data: {
                 name: info.name,
@@ -117,10 +117,9 @@ const maxFileSize = 1048576 * 10 // 1 MB
 
 const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex")
 
-type SignedURLResponse = Promise<
-    | { failure?: undefined; success: { url: string; id: number } }
-    | { failure: string; success?: undefined }
->
+type SignedURLResponse = 
+    | { type: 'success'; success: { url: string; id: number } }
+    | { type: 'failure'; failure: string }
 
 type GetSignedURLParams = {
     fileType: string
@@ -139,13 +138,13 @@ export const getSignedURL = async ({
   width,
   height,
   productId,
-}: GetSignedURLParams & { width: number; height: number }): SignedURLResponse => {
+}: GetSignedURLParams & { width: number; height: number }): Promise<SignedURLResponse> => {
   if (!allowedFileTypes.includes(fileType)) {
-    return { failure: 'File type not allowed' };
+return { type: 'failure', failure: 'File type not allowed' };
   }
 
   if (fileSize > maxFileSize) {
-    return { failure: 'File size too large' };
+    return { type: 'failure', failure: 'File size too large' };
   }
 
   const fileName = generateFileName();
@@ -171,10 +170,10 @@ export const getSignedURL = async ({
 	}).returning()
 
     if (!results) {
-    return { failure: 'Failed to save image details in the database' };
+    return { type: 'failure', failure: 'Failed to save image details in the database' };
   }
     
-    return { success: { url, id: results[0].id } };
+    return { type: 'success', success: { url, id: results[0].id } };
 };
 
 const computeSHA256 = async (file: File) => {
@@ -215,12 +214,9 @@ export async function createProductWithImage(formData: FormData) {
             productId: null, // Will be updated after product creation
         });
 
-        if (!signedURLResult.success) {
-            if (signedURLResult.failure) {
+            if (signedURLResult.type == 'failure') {
                 throw new Error(signedURLResult.failure);
             }
-            throw new Error('Unknown error while getting signed URL');
-        }
 
         const { url, id: imageId } = signedURLResult.success;
         
@@ -261,9 +257,9 @@ export async function createProductWithImage(formData: FormData) {
         });
 
         await stripe.prices.create({
-            currency: 'gbp', // Fixed your typo from 'gpp'
+            currency: 'gbp',
             unit_amount: Math.round(price * 100),
-            product: stripeProduct.id,
+           product: stripeProduct.id,
         });
 
         console.log('Product created successfully!', product);

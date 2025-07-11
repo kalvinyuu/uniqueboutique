@@ -25,7 +25,8 @@ export default async function AdminDashboard() {
             <div className="space-y-6">
 	                <section className="rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800  mb-4">Form Section</h2>
-            <Form products={prod}/>
+            {/* <Form products={prod}/> */}
+            <Form />
             </section>
             <section className="rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800  mb-4">
